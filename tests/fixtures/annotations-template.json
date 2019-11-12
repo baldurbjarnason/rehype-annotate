@@ -1,0 +1,38 @@
+{
+  "@context": "http://www.w3.org/ns/anno.jsonld",
+  "id": "http://example.org/collection1",
+  "type": "AnnotationCollection",
+  "label": "Annotations Collection",
+  "total": 2,
+  "first": {
+    "id": "http://example.org/page1",
+    "type": "AnnotationPage",
+    "label": "Annotations Page",
+    "items": [
+      {
+        "id": "http://example.com/annotations1",
+        "type": "Annotation",
+        "motivation": "bookmarking",
+        "creator": {
+          "id": "http://example.org/user1",
+          "type": "Person",
+          "name": "A. Person",
+          "nickname": "user1"
+        },
+        "created": "2015-10-13T13:00:00Z",
+        "stylesheet": {
+          "id": "http://example.org/stylesheet1",
+          "type": "CssStylesheet"
+        },
+        "target": {
+          "source": "http://example.com/document1",
+          "styleClass": "Bookmark",
+          "selector": {
+            "type": "CssSelector",
+            "value": "h3:first-of-type"
+          }
+        }
+      }
+    ]
+  }
+}
