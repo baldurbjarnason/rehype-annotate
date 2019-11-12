@@ -65,7 +65,7 @@ function matchAnnotations(tree, file, { annotations, url, canonical }) {
         // if target uses Xpath selector: warn that it's unsupported using file.message
         case "XPathSelector":
           debug("using XPathSelector");
-          file.message("Warning! XpathSelector is not yet supported");
+          simpleXpathSelector(tree, selector.value, annotation);
           break;
         // if target uses text position selector: add to process queue
         case "TextQuoteSelector":
@@ -93,6 +93,38 @@ function nodeSelector(tree, value, annotation) {
   if (node) {
     addPropsToNode(node, annotation);
   }
+}
+
+// Based on simple-xpath-selector from https://github.com/tilgovi/simple-xpath-position/blob/master/src/xpath.js MIT license
+function simpleXpathSelector(tree, value, annotation) {
+  const node = fallbackResolve(value, tree);
+  if (node) {
+    addPropsToNode(node, annotation);
+  }
+}
+
+function fallbackResolve(path, root) {
+  const steps = path.split("/");
+  let node = root;
+  while (node) {
+    const step = steps.shift();
+    if (step === undefined) break;
+    if (step === ".") continue;
+    let [name, position] = step.split(/[[\]]/);
+    name = name.replace("_default_:", "");
+    position = position ? parseInt(position) : 1;
+    node = findChild(node, name, position);
+  }
+  return node;
+}
+function findChild(node, name, position) {
+  for (const childNode of node.children) {
+    if (childNode.tagName === name && --position === 0) {
+      node = childNode;
+      break;
+    }
+  }
+  return node;
 }
 
 function addPropsToNode(node, annotation, index = 0) {
