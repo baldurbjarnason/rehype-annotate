@@ -96,6 +96,7 @@ function nodeSelector(tree, value, annotation) {
 }
 
 // Based on simple-xpath-selector from https://github.com/tilgovi/simple-xpath-position/blob/master/src/xpath.js MIT license
+// Doesn't actually work
 function simpleXpathSelector(tree, value, annotation) {
   const node = fallbackResolve(value, tree);
   if (node) {
@@ -110,7 +111,8 @@ function fallbackResolve(path, root) {
     const step = steps.shift();
     if (step === undefined) break;
     if (step === ".") continue;
-    let [name, position] = step.split(/[[\]]/);
+    // eslint-disable-next-line
+    let [name, position] = step.split(/[\[\]]/); // prettier-ignore
     name = name.replace("_default_:", "");
     position = position ? parseInt(position) : 1;
     node = findChild(node, name, position);
@@ -118,13 +120,28 @@ function fallbackResolve(path, root) {
   return node;
 }
 function findChild(node, name, position) {
-  for (const childNode of node.children) {
-    if (childNode.tagName === name && --position === 0) {
-      node = childNode;
-      break;
-    }
+  const parent = node;
+  while (node) {
+    if (nodeName(node) === name && --position === 0) break;
+    node = nextNode(node, parent);
   }
   return node;
+}
+
+function nextNode(node, parent) {
+  const index = parent.children.indexOf(node);
+  if (parent.children[index + 1]) {
+    return parent.children[index + 1];
+  } else {
+    return null;
+  }
+}
+
+function nodeName(node) {
+  if (node.tagName) {
+    return node.tagName.toLowerCase();
+  }
+  return "";
 }
 
 function addPropsToNode(node, annotation, index = 0) {

@@ -23,7 +23,7 @@
         "styleClass": "Bookmarked",
         "selector": {
           "type": "XPathSelector",
-          "value": "/html/body/h1"
+          "value": "/html[1]/body[1]/h1[1]"
         }
       }
     }

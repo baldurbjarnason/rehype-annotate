@@ -8,14 +8,14 @@ const report = require("vfile-reporter");
 const glob = require("glob");
 const path = require("path");
 
-const fragment = { fragment: true };
+// const fragment = { fragment: true };
 
 async function process(filepath, options) {
   let file;
   const input = await vfile.read(filepath);
   try {
     file = await unified()
-      .use(parse, fragment)
+      .use(parse)
       .use(annotate, options)
       .use(stringify)
       .process(input);
