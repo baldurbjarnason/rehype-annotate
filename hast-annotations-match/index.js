@@ -1,19 +1,6 @@
-const { select } = require("hast-util-select");
-const info = require("property-information");
 const debug = require("../logger")("hast-annotations-match");
-
-const props = [
-  "data-annotations-id",
-  "data-selector-index",
-  "data-annotations-motivation",
-  "class",
-  "data-annotations-purpose",
-  "data-annotations-creator"
-];
-const attributes = {};
-for (const prop of props) {
-  attributes[prop] = info.find(info.html, prop).property;
-}
+const rangeSelector = require("./range-selector");
+const getNode = require("./get-node");
 
 module.exports = matchAnnotations;
 
@@ -52,22 +39,6 @@ function matchAnnotations(tree, file, { annotations, url, canonical }) {
     if (testSource(target.source)) {
       const { selector } = target;
       switch (selector.type) {
-        // if target uses fragmentSelector: select with '#' prefix
-        case "FragmentSelector":
-          debug("using FragmentSelector");
-          nodeSelector(tree, "#" + selector.value, annotation);
-          break;
-        // if target uses CSS selector: use select
-        case "CssSelector":
-          debug("using CssSelector");
-          nodeSelector(tree, selector.value, annotation);
-          break;
-        // if target uses Xpath selector: warn that it's unsupported using file.message
-        case "XPathSelector":
-          debug("using XPathSelector");
-          simpleXpathSelector(tree, selector.value, annotation);
-          break;
-        // if target uses text position selector: add to process queue
         case "TextQuoteSelector":
           debug("using TextQuoteSelector");
           break;
@@ -76,8 +47,10 @@ function matchAnnotations(tree, file, { annotations, url, canonical }) {
           debug("using TextPositionSelector");
           break;
         case "RangeSelector":
+          rangeSelector(tree, selector, annotation);
           break;
         default:
+          getNode(tree, selector, annotation);
           break;
       }
     }
@@ -86,85 +59,4 @@ function matchAnnotations(tree, file, { annotations, url, canonical }) {
     return source === url || source === canonical;
   }
   return tree;
-}
-
-function nodeSelector(tree, value, annotation) {
-  const node = select(value, tree);
-  if (node) {
-    addPropsToNode(node, annotation);
-  }
-}
-
-// Based on simple-xpath-selector from https://github.com/tilgovi/simple-xpath-position/blob/master/src/xpath.js MIT license
-// Doesn't actually work
-function simpleXpathSelector(tree, value, annotation) {
-  const node = fallbackResolve(value, tree);
-  if (node) {
-    addPropsToNode(node, annotation);
-  }
-}
-
-function fallbackResolve(path, root) {
-  const steps = path.split("/");
-  let node = root;
-  while (node) {
-    const step = steps.shift();
-    if (step === undefined) break;
-    if (step === ".") continue;
-    // eslint-disable-next-line
-    let [name, position] = step.split(/[\[\]]/); // prettier-ignore
-    name = name.replace("_default_:", "");
-    position = position ? parseInt(position) : 1;
-    node = findChild(node, name, position);
-  }
-  return node;
-}
-function findChild(node, name, position) {
-  const parent = node;
-  while (node) {
-    if (nodeName(node) === name && --position === 0) break;
-    node = nextNode(node, parent);
-  }
-  return node;
-}
-
-function nextNode(node, parent) {
-  const index = parent.children.indexOf(node);
-  if (parent.children[index + 1]) {
-    return parent.children[index + 1];
-  } else {
-    return null;
-  }
-}
-
-function nodeName(node) {
-  if (node.tagName) {
-    return node.tagName.toLowerCase();
-  }
-  return "";
-}
-
-function addPropsToNode(node, annotation, index = 0) {
-  const { target } = annotation;
-  const { body = [] } = annotation;
-  let purposes = body.map(item => item.purpose);
-  purposes = [].concat(...purposes);
-  node.properties[attributes["data-annotations-id"]] = annotation.id;
-  node.properties[attributes["data-selector-index"]] = index;
-  node.properties[attributes["data-annotations-motivation"]] = []
-    .concat(annotation.motivation)
-    .join(" ,");
-  if (target.styleClass) {
-    const classes = node.properties[attributes.class] || [];
-    node.properties[attributes.class] = classes
-      .concat(target.styleClass)
-      .filter(item => item);
-  }
-  if (purposes.length !== 0) {
-    node.properties[attributes["data-annotations-purpose"]] = purposes;
-  }
-  if (annotation.creator && annotation.creator.id) {
-    node.properties[attributes["data-annotations-creator"]] =
-      annotation.creator.id;
-  }
 }
