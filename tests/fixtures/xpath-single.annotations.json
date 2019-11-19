@@ -26,6 +26,30 @@
           "value": "/html[1]/body[1]/h1[1]"
         }
       }
+    },
+    {
+      "id": "http://example.com/annotations2",
+      "type": "Annotation",
+      "motivation": "bookmarking",
+      "creator": {
+        "id": "http://example.org/user1",
+        "type": "Person",
+        "name": "A. Person",
+        "nickname": "user1"
+      },
+      "created": "2015-10-13T13:00:00Z",
+      "stylesheet": {
+        "id": "http://example.org/stylesheet1",
+        "type": "CssStylesheet"
+      },
+      "target": {
+        "source": "https://example.com/tests/fixtures/xpath-single.input.html",
+        "styleClass": "Bookmarked",
+        "selector": {
+          "type": "XPathSelector",
+          "value": "/html[1]/./body[1]/h1[2]"
+        }
+      }
     }
   ]
 }
