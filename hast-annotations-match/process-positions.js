@@ -133,9 +133,7 @@ function processNode({
         currentAnnotation
       );
       const suffixValue = node.value.slice(secondSplit);
-      if (suffixValue.length !== 0) {
-        suffix = { type: "text", value: node.value.slice(secondSplit) };
-      }
+      suffix = { type: "text", value: suffixValue };
       replacement = [prefix, wrappedNode, suffix];
     }
     // else if (start) split at start, wrap the rest
