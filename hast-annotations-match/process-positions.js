@@ -1,7 +1,7 @@
 const visit = require("unist-util-visit");
 const addPropsToNode = require("./add-props-to-node");
 const h = require("hastscript");
-const debug = require("../logger")("process-positions");
+// const debug = require("../logger")("process-positions");
 
 /* 
 ## `hast-annotations-match`
@@ -38,8 +38,8 @@ module.exports = function processPositions(tree, file, positionAnnotations) {
     // What should we do if the node selector has a highlighting purpose?
     // -> The sensible solution is that highlights with a node selector are rendered differently (e.g. border or background behind entire node)
     // That way we have fewer nestd marks to worry about.
-    const { start, end } = annotation.target.selector;
-    debug("visitor start: ", count, start, end, count + node.value.length);
+    // const { start, end } = annotation.target.selector;
+    // debug("visitor start: ", count, start, end, count + node.value.length);
     visitNode({ count, currentAnnotation: annotation, node, parent, index });
     count = count + node.value.length;
   }
@@ -94,7 +94,7 @@ function startIsInNode(count, currentAnnotation, node) {
   let startInNode = false;
   if (count <= start && start <= count + node.value.length) {
     startInNode = true;
-    debug("start is in node");
+    // debug("start is in node");
   }
   return startInNode;
 }
@@ -104,7 +104,7 @@ function endIsInNode(count, currentAnnotation, node) {
   let endInNode = false;
   if (count <= end && end <= count + node.value.length) {
     endInNode = true;
-    debug("end is in node");
+    // debug("end is in node");
   }
   return endInNode;
 }
@@ -159,7 +159,7 @@ function processNode({
     count + node.value.length < end &&
     node.value.trim()
   ) {
-    debug("whitespace: ", !node.value.trim());
+    // debug("whitespace: ", !node.value.trim());
     replacement = [wrapNode(node.value, 0, currentAnnotation)];
   }
   return { replacement, suffix };

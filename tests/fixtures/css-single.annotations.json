@@ -20,7 +20,6 @@
       },
       "target": {
         "source": "https://example.com/tests/fixtures/css-single.input.html",
-        "styleClass": "Bookmarked",
         "selector": {
           "type": "CssSelector",
           "value": "h3:first-of-type"

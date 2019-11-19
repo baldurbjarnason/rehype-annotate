@@ -24,7 +24,6 @@ async function process(filepath, options) {
     console.log(err);
     console.error(report(err));
   }
-  const filename = path.basename(file.path);
   return String(file);
 }
 
