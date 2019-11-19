@@ -2,9 +2,14 @@ const addPropsToNode = require("./add-props-to-node");
 
 // Based on simple-xpath-selector from https://github.com/tilgovi/simple-xpath-position/blob/master/src/xpath.js MIT license
 // Doesn't actually work
-module.exports = function simpleXpathSelector(tree, value, annotation) {
+module.exports = function simpleXpathSelector(
+  tree,
+  value,
+  annotation,
+  addProps = true
+) {
   const node = fallbackResolve(value, tree);
-  if (node) {
+  if (node && addProps) {
     addPropsToNode(node, annotation);
   }
   return node;

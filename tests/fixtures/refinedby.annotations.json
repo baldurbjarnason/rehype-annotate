@@ -1,0 +1,89 @@
+{
+  "id": "http://example.org/page1",
+  "type": "AnnotationPage",
+  "label": "Annotations Page",
+  "items": [
+    {
+      "id": "http://example.com/annotations1",
+      "type": "Annotation",
+      "motivation": "highlighting",
+      "created": "2015-10-13T13:00:00Z",
+      "body": [
+        {
+          "type": "TextualBody",
+          "value": "<p>j'adore !</p>",
+          "format": "text/html",
+          "language": "fr",
+          "purpose": "commenting"
+        }
+      ],
+      "target": {
+        "source": "https://example.com/tests/fixtures/refinedby.input.html",
+        "styleClass": "Bookmarked",
+        "selector": {
+          "type": "CssSelector",
+          "value": "h3:first-of-type",
+          "refinedBy": {
+            "type": "TextPositionSelector",
+            "start": 0,
+            "end": 12
+          }
+        }
+      }
+    },
+    {
+      "id": "http://example.com/annotations2",
+      "type": "Annotation",
+      "motivation": "highlighting",
+      "created": "2015-10-13T13:00:00Z",
+      "body": [
+        {
+          "type": "TextualBody",
+          "value": "<p>j'adore !</p>",
+          "format": "text/html",
+          "language": "fr",
+          "purpose": "commenting"
+        }
+      ],
+      "target": {
+        "source": "https://example.com/tests/fixtures/refinedby.input.html",
+        "styleClass": "Bookmarked",
+        "selector": {
+          "type": "XPathSelector",
+          "value": "/html[1]/body[1]/h1[1]",
+          "refinedBy": {
+            "type": "TextQuoteSelector",
+            "exact": "entire bygone figure"
+          }
+        }
+      }
+    },
+    {
+      "id": "http://example.com/annotations3-no-refine-match",
+      "type": "Annotation",
+      "motivation": "highlighting",
+      "created": "2015-10-13T13:00:00Z",
+      "body": [
+        {
+          "type": "TextualBody",
+          "value": "<p>j'adore !</p>",
+          "format": "text/html",
+          "language": "fr",
+          "purpose": "commenting"
+        }
+      ],
+      "target": {
+        "source": "https://example.com/tests/fixtures/refinedby.input.html",
+        "styleClass": "Bookmarked",
+        "selector": {
+          "type": "CssSelector",
+          "value": "ul:first-of-type",
+          "refinedBy": {
+            "type": "CssSelector",
+            "value": "li:first-of-type"
+          }
+        }
+      }
+    }
+  ]
+}
