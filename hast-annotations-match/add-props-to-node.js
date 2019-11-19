@@ -1,5 +1,14 @@
 const info = require("property-information");
 
+/* 
+## Props
+* `data-annotations-id`
+* `data-selector-index`: index of mark in total number of marks for this selector
+* `data-annotations-motivation`: annotations motivations
+* `class` : styleClass
+* `data-annotations-purpose`: body purposes
+* `data-annotations-creator` 
+*/
 const props = [
   "data-annotations-id",
   "data-selector-index",

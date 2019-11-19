@@ -1,6 +1,7 @@
 const debug = require("../logger")("hast-annotations-match");
 const rangeSelector = require("./range-selector");
 const getNode = require("./get-node");
+const processPositions = require("./process-positions");
 
 module.exports = matchAnnotations;
 
@@ -24,16 +25,19 @@ For each selector:
 5. Add link to annotations collection id in head
 
 ## Props
+
 * `data-annotations-id`
 * `data-selector-index`: index of mark in total number of marks for this selector
 * `data-annotations-motivation`: annotations motivations
 * `class` : styleClass
 * `data-annotations-purpose`: body purposes
 * `data-annotations-creator` 
+
 */
 
 function matchAnnotations(tree, file, { annotations, url, canonical }) {
   // iterate through annotations
+  let positionAnnotations = [];
   for (const annotation of annotations) {
     const { target } = annotation;
     if (testSource(target.source)) {
@@ -42,9 +46,9 @@ function matchAnnotations(tree, file, { annotations, url, canonical }) {
         case "TextQuoteSelector":
           debug("using TextQuoteSelector");
           break;
-        // if target uses text-quote selector: convert to text position and add to process queue
         case "TextPositionSelector":
           debug("using TextPositionSelector");
+          positionAnnotations = positionAnnotations.concat(annotation);
           break;
         case "RangeSelector":
           rangeSelector(tree, selector, annotation);
@@ -55,6 +59,7 @@ function matchAnnotations(tree, file, { annotations, url, canonical }) {
       }
     }
   }
+  processPositions(tree, file, positionAnnotations);
   function testSource(source) {
     return source === url || source === canonical;
   }

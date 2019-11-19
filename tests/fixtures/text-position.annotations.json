@@ -1,0 +1,103 @@
+{
+  "id": "http://example.org/page1",
+  "type": "AnnotationPage",
+  "label": "Annotations Page",
+  "items": [
+    {
+      "id": "http://example.com/annotations1",
+      "type": "Annotation",
+      "motivation": "highlighting",
+      "created": "2015-10-13T13:00:00Z",
+      "body": [
+        {
+          "type": "TextualBody",
+          "value": "<p>j'adore !</p>",
+          "format": "text/html",
+          "language": "fr",
+          "purpose": "commenting"
+        }
+      ],
+      "target": {
+        "source": "https://example.com/tests/fixtures/text-position.input.html",
+        "styleClass": "Bookmarked",
+        "selector": {
+          "type": "TextPositionSelector",
+          "start": 176,
+          "end": 368
+        }
+      }
+    },
+    {
+      "id": "http://example.com/annotations2",
+      "type": "Annotation",
+      "motivation": "highlighting",
+      "created": "2015-10-13T13:00:00Z",
+      "body": [
+        {
+          "type": "TextualBody",
+          "value": "<p>j'adore !</p>",
+          "format": "text/html",
+          "language": "fr",
+          "purpose": "commenting"
+        }
+      ],
+      "target": {
+        "source": "https://example.com/tests/fixtures/text-position.input.html",
+        "styleClass": "Bookmarked",
+        "selector": {
+          "type": "TextPositionSelector",
+          "start": 559,
+          "end": 586
+        }
+      }
+    },
+    {
+      "id": "http://example.com/annotations3",
+      "type": "Annotation",
+      "motivation": "highlighting",
+      "created": "2015-10-13T13:00:00Z",
+      "body": [
+        {
+          "type": "TextualBody",
+          "value": "<p>j'adore !</p>",
+          "format": "text/html",
+          "language": "fr",
+          "purpose": "commenting"
+        }
+      ],
+      "target": {
+        "source": "https://example.com/tests/fixtures/text-position.input.html",
+        "styleClass": "Bookmarked",
+        "selector": {
+          "type": "TextPositionSelector",
+          "start": 1664,
+          "end": 1684
+        }
+      }
+    },
+    {
+      "id": "http://example.com/annotations4",
+      "type": "Annotation",
+      "motivation": "highlighting",
+      "created": "2015-10-13T13:00:00Z",
+      "body": [
+        {
+          "type": "TextualBody",
+          "value": "<p>j'adore !</p>",
+          "format": "text/html",
+          "language": "fr",
+          "purpose": "commenting"
+        }
+      ],
+      "target": {
+        "source": "https://example.com/tests/fixtures/text-position.input.html",
+        "styleClass": "Bookmarked",
+        "selector": {
+          "type": "TextPositionSelector",
+          "start": 1779,
+          "end": 1792
+        }
+      }
+    }
+  ]
+}
