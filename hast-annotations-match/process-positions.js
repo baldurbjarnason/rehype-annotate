@@ -25,7 +25,9 @@ For each selector:
 
 module.exports = function processPositions(tree, file, positionAnnotations) {
   // Sort annotations based on selector.start, merge overlapping annotations
-  positionAnnotations.sort((a, b) => a.start - b.start);
+  positionAnnotations.sort(
+    (a, b) => a.target.selector.start - b.target.selector.start
+  );
   // shift first annotation
   let annotation = getAnnotation(positionAnnotations);
   // visit tree with parents, filtering on text nodes, maintaining character count
@@ -123,26 +125,32 @@ function processNode({
     const firstSplit = start - count;
     const secondSplit = end - count;
     const prefix = { type: "text", value: node.value.slice(0, firstSplit) };
-    const wrappedNode = wrapNode(
-      node.value.slice(firstSplit, secondSplit),
-      currentAnnotation.__index,
-      currentAnnotation
-    );
-    const suffixValue = node.value.slice(secondSplit);
-    if (suffixValue.length !== 0) {
-      suffix = { type: "text", value: node.value.slice(secondSplit) };
+    const nodeValue = node.value.slice(firstSplit, secondSplit);
+    if (nodeValue.trim()) {
+      const wrappedNode = wrapNode(
+        node.value.slice(firstSplit, secondSplit),
+        currentAnnotation.__index,
+        currentAnnotation
+      );
+      const suffixValue = node.value.slice(secondSplit);
+      if (suffixValue.length !== 0) {
+        suffix = { type: "text", value: node.value.slice(secondSplit) };
+      }
+      replacement = [prefix, wrappedNode, suffix];
     }
-    replacement = [prefix, wrappedNode, suffix];
     // else if (start) split at start, wrap the rest
   } else if (startInNode) {
     const firstSplit = start - count;
     const prefix = { type: "text", value: node.value.slice(0, firstSplit) };
-    const wrappedNode = wrapNode(
-      node.value.slice(firstSplit),
-      currentAnnotation.__index,
-      currentAnnotation
-    );
-    replacement = [prefix, wrappedNode];
+    const nodeValue = node.value.slice(firstSplit);
+    if (nodeValue.trim()) {
+      const wrappedNode = wrapNode(
+        node.value.slice(firstSplit),
+        currentAnnotation.__index,
+        currentAnnotation
+      );
+      replacement = [prefix, wrappedNode];
+    }
     // else if (end) split at end, wrap beginning
   } else if (endInNode) {
     const secondSplit = end - count;

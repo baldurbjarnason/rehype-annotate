@@ -9,10 +9,11 @@ const SLICE_RE = new RegExp("(.|[\r\n]){1," + String(SLICE_LENGTH) + "}", "g");
 const toString = require("hast-util-to-string");
 
 module.exports = function processQuotations(tree, file, quoteAnnotations) {
-  const positionAnnotations = quoteAnnotations.map(processQuote);
+  let positionAnnotations = quoteAnnotations.map(processQuote);
   function processQuote(annotation, index) {
     return processor(tree, annotation);
   }
+  positionAnnotations = positionAnnotations.filter(item => item);
   processPositions(tree, file, positionAnnotations);
 };
 
@@ -29,7 +30,7 @@ function processor(tree, annotation, options = {}) {
   // Work around a hard limit of the DiffMatchPatch bitap implementation.
   // The search pattern must be no more than SLICE_LENGTH characters.
   const slices = exact.match(SLICE_RE);
-  let loc = hint === undefined ? (textContent.length / 2) | 0 : hint;
+  let loc = (hint === textContent.length / 2) | 0;
   let start = Number.POSITIVE_INFINITY;
   let end = Number.NEGATIVE_INFINITY;
   let result = -1;

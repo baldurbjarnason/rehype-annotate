@@ -1,4 +1,4 @@
-const debug = require("../logger")("hast-annotations-match");
+// const debug = require("../logger")("hast-annotations-match");
 const rangeSelector = require("./range-selector");
 const getNode = require("./get-node");
 const processPositions = require("./process-positions");
@@ -46,15 +46,15 @@ function matchAnnotations(tree, file, { annotations, url, canonical }) {
       const { selector } = target;
       switch (selector.type) {
         case "TextQuoteSelector":
-          debug("using TextQuoteSelector");
+          // debug("using TextQuoteSelector");
           quoteAnnotations = quoteAnnotations.concat(annotation);
           break;
         case "TextPositionSelector":
-          debug("using TextPositionSelector");
+          // debug("using TextPositionSelector");
           positionAnnotations = positionAnnotations.concat(annotation);
           break;
         case "RangeSelector":
-          debug("using RangeSelector");
+          // debug("using RangeSelector");
           rangeSelector(tree, selector, annotation);
           break;
         default:

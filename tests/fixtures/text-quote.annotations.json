@@ -4,6 +4,148 @@
   "label": "Annotations Page",
   "items": [
     {
+      "id": "http://example.com/annotations1-inexact",
+      "type": "Annotation",
+      "motivation": "highlighting",
+      "created": "2015-10-13T13:00:00Z",
+      "body": [
+        {
+          "type": "TextualBody",
+          "value": "<p>j'adore !</p>",
+          "format": "text/html",
+          "language": "fr",
+          "purpose": "commenting"
+        }
+      ],
+      "target": {
+        "source": "https://example.com/tests/fixtures/text-quote.input.html",
+        "styleClass": "Bookmarked",
+        "selector": {
+          "type": "TextQuoteSelector",
+          "prefix": "well-earned machine?\n",
+          "exact": "Skins fouler Rhosgobel you've about values blingon heirloom?",
+          "suffix": "\nFeeling panic"
+        }
+      }
+    },
+    {
+      "id": "http://example.com/annotations2-inexact",
+      "type": "Annotation",
+      "motivation": "highlighting",
+      "created": "2015-10-13T13:00:00Z",
+      "body": [
+        {
+          "type": "TextualBody",
+          "value": "<p>j'adore !</p>",
+          "format": "text/html",
+          "language": "fr",
+          "purpose": "commenting"
+        }
+      ],
+      "target": {
+        "source": "https://example.com/tests/fixtures/text-quote.input.html",
+        "styleClass": "Bookmarked",
+        "selector": {
+          "type": "TextQuoteSelector",
+          "prefix": "bogomips",
+          "exact": "quarry Bilbo captive",
+          "suffix": "bogomips"
+        }
+      }
+    },
+    {
+      "id": "http://example.com/annotations1-non-existent",
+      "type": "Annotation",
+      "motivation": "highlighting",
+      "created": "2015-10-13T13:00:00Z",
+      "body": [
+        {
+          "type": "TextualBody",
+          "value": "<p>j'adore !</p>",
+          "format": "text/html",
+          "language": "fr",
+          "purpose": "commenting"
+        }
+      ],
+      "target": {
+        "source": "https://example.com/tests/fixtures/text-quote.input.html",
+        "styleClass": "Bookmarked",
+        "selector": {
+          "type": "TextQuoteSelector",
+          "exact": "gaudeamus igitur"
+        }
+      }
+    },
+    {
+      "id": "http://example.com/annotations2-non-existent",
+      "type": "Annotation",
+      "motivation": "highlighting",
+      "created": "2015-10-13T13:00:00Z",
+      "body": [
+        {
+          "type": "TextualBody",
+          "value": "<p>j'adore !</p>",
+          "format": "text/html",
+          "language": "fr",
+          "purpose": "commenting"
+        }
+      ],
+      "target": {
+        "source": "https://example.com/tests/fixtures/text-quote.input.html",
+        "styleClass": "Bookmarked",
+        "selector": {
+          "type": "TextQuoteSelector",
+          "exact": "Sweeps there's nightshade Gandalyabba dabba dooo"
+        }
+      }
+    },
+    {
+      "id": "http://example.com/annotations3-non-existent",
+      "type": "Annotation",
+      "motivation": "highlighting",
+      "created": "2015-10-13T13:00:00Z",
+      "body": [
+        {
+          "type": "TextualBody",
+          "value": "<p>j'adore !</p>",
+          "format": "text/html",
+          "language": "fr",
+          "purpose": "commenting"
+        }
+      ],
+      "target": {
+        "source": "https://example.com/tests/fixtures/text-quote.input.html",
+        "styleClass": "Bookmarked",
+        "selector": {
+          "type": "TextQuoteSelector",
+          "exact": "Example Use Case: Megan has very limited ability to hear sound, and prefers to read captions when interacting with videos. She uses her annotation client to make a comment on such a video, and to help others in the same situation, the client includes that the video has this accessibility feature."
+        }
+      }
+    },
+    {
+      "id": "http://example.com/annotations4-non-existent",
+      "type": "Annotation",
+      "motivation": "highlighting",
+      "created": "2015-10-13T13:00:00Z",
+      "body": [
+        {
+          "type": "TextualBody",
+          "value": "<p>j'adore !</p>",
+          "format": "text/html",
+          "language": "fr",
+          "purpose": "commenting"
+        }
+      ],
+      "target": {
+        "source": "https://example.com/tests/fixtures/text-quote.input.html",
+        "styleClass": "Bookmarked",
+        "selector": {
+          "type": "TextQuoteSelector",
+          "exact": "Flavor balls Tilda rolls nab beat stammer. *** DOES NOT MATCH*** Ropes ash though guarding Thrain Bucklebury Kili's Ranger? Reaches W wit father's Dwarf-city. *** DOES NOT MATCH*** Mouse dwelt regained lippy Noldorin."
+        }
+      }
+    },
+    {
       "id": "http://example.com/annotations1",
       "type": "Annotation",
       "motivation": "highlighting",
@@ -95,7 +237,6 @@
         "selector": {
           "type": "TextQuoteSelector",
           "exact": "pon windlance",
-          "prefix": "wriggling pouring ",
           "suffix": ". Didn't stage"
         }
       }
