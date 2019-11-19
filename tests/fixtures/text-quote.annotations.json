@@ -1,0 +1,104 @@
+{
+  "id": "http://example.org/page1",
+  "type": "AnnotationPage",
+  "label": "Annotations Page",
+  "items": [
+    {
+      "id": "http://example.com/annotations1",
+      "type": "Annotation",
+      "motivation": "highlighting",
+      "created": "2015-10-13T13:00:00Z",
+      "body": [
+        {
+          "type": "TextualBody",
+          "value": "<p>j'adore !</p>",
+          "format": "text/html",
+          "language": "fr",
+          "purpose": "commenting"
+        }
+      ],
+      "target": {
+        "source": "https://example.com/tests/fixtures/text-quote.input.html",
+        "styleClass": "Bookmarked",
+        "selector": {
+          "type": "TextQuoteSelector",
+          "exact": "pottery on? It must be taken deep into Mordor and cast back into the fiery chasm from whence it came.\nStirs ending exceeding fond muster fall Bagshot.\nResilient Garulf key quest abandon knives"
+        }
+      }
+    },
+    {
+      "id": "http://example.com/annotations2",
+      "type": "Annotation",
+      "motivation": "highlighting",
+      "created": "2015-10-13T13:00:00Z",
+      "body": [
+        {
+          "type": "TextualBody",
+          "value": "<p>j'adore !</p>",
+          "format": "text/html",
+          "language": "fr",
+          "purpose": "commenting"
+        }
+      ],
+      "target": {
+        "source": "https://example.com/tests/fixtures/text-quote.input.html",
+        "styleClass": "Bookmarked",
+        "selector": {
+          "type": "TextQuoteSelector",
+          "exact": " tobacco chicken ridiculous",
+          "prefix": "World bodies gifted"
+        }
+      }
+    },
+    {
+      "id": "http://example.com/annotations3",
+      "type": "Annotation",
+      "motivation": "highlighting",
+      "created": "2015-10-13T13:00:00Z",
+      "body": [
+        {
+          "type": "TextualBody",
+          "value": "<p>j'adore !</p>",
+          "format": "text/html",
+          "language": "fr",
+          "purpose": "commenting"
+        }
+      ],
+      "target": {
+        "source": "https://example.com/tests/fixtures/text-quote.input.html",
+        "styleClass": "Bookmarked",
+        "selector": {
+          "type": "TextQuoteSelector",
+          "exact": "chap. Big grey beard",
+          "prefix": "Elderly ",
+          "suffix": ", pointy hat."
+        }
+      }
+    },
+    {
+      "id": "http://example.com/annotations4",
+      "type": "Annotation",
+      "motivation": "highlighting",
+      "created": "2015-10-13T13:00:00Z",
+      "body": [
+        {
+          "type": "TextualBody",
+          "value": "<p>j'adore !</p>",
+          "format": "text/html",
+          "language": "fr",
+          "purpose": "commenting"
+        }
+      ],
+      "target": {
+        "source": "https://example.com/tests/fixtures/text-quote.input.html",
+        "styleClass": "Bookmarked",
+        "selector": {
+          "type": "TextQuoteSelector",
+          "exact": "pon windlance",
+          "prefix": "wriggling pouring ",
+          "suffix": ". Didn't stage"
+        }
+      }
+    }
+  ]
+}

@@ -17,6 +17,7 @@
     ]
   },
   "dependencies": {
+    "diff-match-patch": "1.0.4",
     "glob": "7.1.6",
     "hast-util-select": "3.0.1",
     "hast-util-to-string": "1.0.2",

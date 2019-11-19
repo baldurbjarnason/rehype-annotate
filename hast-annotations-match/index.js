@@ -2,6 +2,7 @@ const debug = require("../logger")("hast-annotations-match");
 const rangeSelector = require("./range-selector");
 const getNode = require("./get-node");
 const processPositions = require("./process-positions");
+const processQuotations = require("./process-quotations");
 
 module.exports = matchAnnotations;
 
@@ -38,6 +39,7 @@ For each selector:
 function matchAnnotations(tree, file, { annotations, url, canonical }) {
   // iterate through annotations
   let positionAnnotations = [];
+  let quoteAnnotations = [];
   for (const annotation of annotations) {
     const { target } = annotation;
     if (testSource(target.source)) {
@@ -45,6 +47,7 @@ function matchAnnotations(tree, file, { annotations, url, canonical }) {
       switch (selector.type) {
         case "TextQuoteSelector":
           debug("using TextQuoteSelector");
+          quoteAnnotations = quoteAnnotations.concat(annotation);
           break;
         case "TextPositionSelector":
           debug("using TextPositionSelector");
@@ -61,6 +64,7 @@ function matchAnnotations(tree, file, { annotations, url, canonical }) {
     }
   }
   processPositions(tree, file, positionAnnotations);
+  processQuotations(tree, file, quoteAnnotations);
   function testSource(source) {
     return source === url || source === canonical;
   }
