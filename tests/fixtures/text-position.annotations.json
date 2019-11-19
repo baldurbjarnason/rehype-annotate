@@ -4,6 +4,30 @@
   "label": "Annotations Page",
   "items": [
     {
+      "id": "http://example.com/annotations-whitespace",
+      "type": "Annotation",
+      "motivation": "highlighting",
+      "created": "2015-10-13T13:00:00Z",
+      "body": [
+        {
+          "type": "TextualBody",
+          "value": "<p>j'adore !</p>",
+          "format": "text/html",
+          "language": "fr",
+          "purpose": "commenting"
+        }
+      ],
+      "target": {
+        "source": "https://example.com/tests/fixtures/text-position.input.html",
+        "styleClass": "Bookmarked",
+        "selector": {
+          "type": "TextPositionSelector",
+          "start": 5,
+          "end": 6
+        }
+      }
+    },
+    {
       "id": "http://example.com/annotations1",
       "type": "Annotation",
       "motivation": "highlighting",
