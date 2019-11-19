@@ -51,6 +51,7 @@ function matchAnnotations(tree, file, { annotations, url, canonical }) {
           positionAnnotations = positionAnnotations.concat(annotation);
           break;
         case "RangeSelector":
+          debug("using RangeSelector");
           rangeSelector(tree, selector, annotation);
           break;
         default:

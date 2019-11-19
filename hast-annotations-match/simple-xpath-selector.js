@@ -7,6 +7,7 @@ module.exports = function simpleXpathSelector(tree, value, annotation) {
   if (node) {
     addPropsToNode(node, annotation);
   }
+  return node;
 };
 
 function fallbackResolve(path, root) {

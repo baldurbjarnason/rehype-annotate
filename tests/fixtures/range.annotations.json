@@ -1,0 +1,67 @@
+{
+  "id": "http://example.org/page1",
+  "type": "AnnotationPage",
+  "label": "Annotations Page",
+  "items": [
+    {
+      "id": "http://example.com/annotations1",
+      "type": "Annotation",
+      "motivation": "bookmarking",
+      "creator": {
+        "id": "http://example.org/user1",
+        "type": "Person",
+        "name": "A. Person",
+        "nickname": "user1"
+      },
+      "created": "2015-10-13T13:00:00Z",
+      "stylesheet": {
+        "id": "http://example.org/stylesheet1",
+        "type": "CssStylesheet"
+      },
+      "target": {
+        "source": "https://example.com/tests/fixtures/range.input.html",
+        "selector": {
+          "type": "RangeSelector",
+          "startSelector": {
+            "type": "XPathSelector",
+            "value": "/html[1]/body[1]/h1[1]"
+          },
+          "endSelector": {
+            "type": "CssSelector",
+            "value": "h3:first-of-type"
+          }
+        }
+      }
+    },
+    {
+      "id": "http://example.com/annotations1",
+      "type": "Annotation",
+      "motivation": "bookmarking",
+      "creator": {
+        "id": "http://example.org/user1",
+        "type": "Person",
+        "name": "A. Person",
+        "nickname": "user1"
+      },
+      "created": "2015-10-13T13:00:00Z",
+      "stylesheet": {
+        "id": "http://example.org/stylesheet1",
+        "type": "CssStylesheet"
+      },
+      "target": {
+        "source": "https://example.com/tests/fixtures/range.input.html",
+        "selector": {
+          "type": "RangeSelector",
+          "startSelector": {
+            "type": "XPathSelector",
+            "value": "/html[1]/body[1]/h1[2]"
+          },
+          "endSelector": {
+            "type": "CssSelector",
+            "value": "h3:first-of-type"
+          }
+        }
+      }
+    }
+  ]
+}

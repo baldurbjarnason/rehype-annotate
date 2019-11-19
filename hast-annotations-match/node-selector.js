@@ -6,4 +6,5 @@ module.exports = function nodeSelector(tree, value, annotation) {
   if (node) {
     addPropsToNode(node, annotation);
   }
+  return node;
 };

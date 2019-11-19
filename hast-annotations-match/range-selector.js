@@ -10,6 +10,7 @@ module.exports = function rangeSelector(tree, selector, annotation) {
   let controlStart = false;
   let controlEnd = false;
   let selectedNodes = [startNode];
+  if (!startNode || !endNode) return;
   visit(tree, "element", (node, index, parent) => {
     if (controlStart && !controlEnd) {
       selectedNodes = selectedNodes.concat(node);
@@ -22,7 +23,7 @@ module.exports = function rangeSelector(tree, selector, annotation) {
     }
   });
   selectedNodes = [...selectedNodes, endNode];
-  selectedNodes.map((node, index) => {
-    addPropsToNode(node, annotation, index);
+  selectedNodes.map(node => {
+    addPropsToNode(node, annotation, 0);
   });
 };
