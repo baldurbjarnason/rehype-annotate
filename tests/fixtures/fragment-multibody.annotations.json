@@ -40,6 +40,44 @@
           "value": "test-id"
         }
       }
+    },
+    {
+      "id": "http://example.com/annotations2-does-not-exist",
+      "type": "Annotation",
+      "motivation": "bookmarking",
+      "creator": {
+        "id": "http://example.org/user1",
+        "type": "Person",
+        "name": "A. Person",
+        "nickname": "user1"
+      },
+      "created": "2015-10-13T13:00:00Z",
+      "stylesheet": {
+        "id": "http://example.org/stylesheet1",
+        "type": "CssStylesheet"
+      },
+      "body": [
+        {
+          "type": "TextualBody",
+          "purpose": "tagging",
+          "value": "love"
+        },
+        {
+          "type": "TextualBody",
+          "value": "<p>j'adore !</p>",
+          "format": "text/html",
+          "language": "fr",
+          "purpose": "describing"
+        }
+      ],
+      "target": {
+        "source": "https://example.com/tests/fixtures/fragment-multibody.input.html",
+        "styleClass": "Bookmarked",
+        "selector": {
+          "type": "FragmentSelector",
+          "value": "this-id-does-not-exist-in-the-text"
+        }
+      }
     }
   ]
 }
