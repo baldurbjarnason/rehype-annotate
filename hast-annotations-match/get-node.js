@@ -1,5 +1,5 @@
 // const debug = require("../logger")("hast-annotations-match");
-const nodeSelector = require("./node-selector");
+const nodeSelector = require("./css-selector");
 const simpleXpathSelector = require("./simple-xpath-selector");
 const processPositions = require("./process-positions");
 const processQuotations = require("./process-quotations");
