@@ -2,19 +2,18 @@ const info = require("property-information");
 
 /* 
 ## Props
-* `data-annotations-id`
+* `data-annotation-id`
 * `data-selector-index`: index of mark in total number of marks for this selector
-* `data-annotations-motivation`: annotations motivations
+* `data-annotation-motivation`: annotations motivations
 * `class` : styleClass
-* `data-annotations-purpose`: body purposes
-* `data-annotations-creator` 
+* `data-annotation-purpose`: body purposes
 */
 const props = [
-  "data-annotations-id",
+  "data-annotation-id",
   "data-controller",
-  "data-annotations-motivation",
+  "data-annotation-motivation",
   "class",
-  "data-annotations-purpose"
+  "data-annotation-purpose"
 ];
 const attributes = {};
 for (const prop of props) {
@@ -26,8 +25,8 @@ module.exports = function addPropsToNode(node, annotation) {
   const { body = [] } = annotation;
   let purposes = body.map(item => item.purpose);
   purposes = [].concat(...purposes);
-  node.properties[attributes["data-annotations-id"]] = annotation.id;
-  node.properties[attributes["data-annotations-motivation"]] = []
+  node.properties[attributes["data-annotation-id"]] = annotation.id;
+  node.properties[attributes["data-annotation-motivation"]] = []
     .concat(annotation.motivation)
     .join(" ,");
   if (target.styleClass) {
@@ -37,6 +36,6 @@ module.exports = function addPropsToNode(node, annotation) {
       .filter(item => item);
   }
   if (purposes.length !== 0) {
-    node.properties[attributes["data-annotations-purpose"]] = purposes;
+    node.properties[attributes["data-annotation-purpose"]] = purposes;
   }
 };

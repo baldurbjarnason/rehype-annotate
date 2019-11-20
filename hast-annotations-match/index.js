@@ -66,8 +66,8 @@ function matchAnnotations(tree, file, { annotations, url, canonical }) {
   }
   processPositions(tree, file, positionAnnotations);
   processQuotations(tree, file, quoteAnnotations);
-  const sortedAnnotationsId = selectAll("[data-annotations-id]", tree).map(
-    node => node.properties.dataAnnotationsId
+  const sortedAnnotationsId = selectAll("[data-annotation-id]", tree).map(
+    node => node.properties.dataAnnotationId
   );
   const sortedAnnotations = Array.from(new Set(sortedAnnotationsId)).map(id =>
     annotations.find(annotation => annotation.id === id)
