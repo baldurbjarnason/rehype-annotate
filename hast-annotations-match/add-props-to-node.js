@@ -14,8 +14,7 @@ const props = [
   "data-controller",
   "data-annotations-motivation",
   "class",
-  "data-annotations-purpose",
-  "data-annotations-creator"
+  "data-annotations-purpose"
 ];
 const attributes = {};
 for (const prop of props) {
@@ -39,9 +38,5 @@ module.exports = function addPropsToNode(node, annotation) {
   }
   if (purposes.length !== 0) {
     node.properties[attributes["data-annotations-purpose"]] = purposes;
-  }
-  if (annotation.creator && annotation.creator.id) {
-    node.properties[attributes["data-annotations-creator"]] =
-      annotation.creator.id;
   }
 };
