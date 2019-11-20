@@ -76,18 +76,15 @@ module.exports = function processPositions(tree, file, positionAnnotations) {
   }
 };
 
-function wrapNode(text, index, annotation) {
+function wrapNode(text, annotation) {
   // If we decide to support linking purposes by rendering actual links then we need to change this and make sure we don't render nested links.
   // It's actually simpler in the meantime to support linking purposes by rendering a link button either after highlight or in sidebar.
   const node = h("mark", text);
-  addPropsToNode(node, annotation, index);
+  addPropsToNode(node, annotation);
   return node;
 }
 function getAnnotation(positionAnnotations) {
   const annotation = positionAnnotations.shift();
-  if (annotation) {
-    annotation.__index = 0;
-  }
   return annotation;
 }
 
@@ -129,7 +126,6 @@ function processNode({
     if (nodeValue.trim()) {
       const wrappedNode = wrapNode(
         node.value.slice(firstSplit, secondSplit),
-        currentAnnotation.__index,
         currentAnnotation
       );
       const suffixValue = node.value.slice(secondSplit);
@@ -144,7 +140,6 @@ function processNode({
     if (nodeValue.trim()) {
       const wrappedNode = wrapNode(
         node.value.slice(firstSplit),
-        currentAnnotation.__index,
         currentAnnotation
       );
       replacement = [prefix, wrappedNode];
@@ -154,7 +149,6 @@ function processNode({
     const secondSplit = end - count;
     const wrappedNode = wrapNode(
       node.value.slice(0, secondSplit),
-      currentAnnotation.__index,
       currentAnnotation
     );
     suffix = { type: "text", value: node.value.slice(secondSplit) };
@@ -166,7 +160,7 @@ function processNode({
     node.value.trim()
   ) {
     // debug("whitespace: ", !node.value.trim());
-    replacement = [wrapNode(node.value, 0, currentAnnotation)];
+    replacement = [wrapNode(node.value, currentAnnotation)];
   }
   return { replacement, suffix };
 }

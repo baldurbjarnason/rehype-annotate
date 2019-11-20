@@ -11,7 +11,7 @@ const info = require("property-information");
 */
 const props = [
   "data-annotations-id",
-  "data-selector-index",
+  "data-controller",
   "data-annotations-motivation",
   "class",
   "data-annotations-purpose",
@@ -22,13 +22,12 @@ for (const prop of props) {
   attributes[prop] = info.find(info.html, prop).property;
 }
 
-module.exports = function addPropsToNode(node, annotation, index = 0) {
+module.exports = function addPropsToNode(node, annotation) {
   const { target } = annotation;
   const { body = [] } = annotation;
   let purposes = body.map(item => item.purpose);
   purposes = [].concat(...purposes);
   node.properties[attributes["data-annotations-id"]] = annotation.id;
-  node.properties[attributes["data-selector-index"]] = index;
   node.properties[attributes["data-annotations-motivation"]] = []
     .concat(annotation.motivation)
     .join(" ,");
