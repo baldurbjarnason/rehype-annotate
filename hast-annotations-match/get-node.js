@@ -6,36 +6,43 @@ const processQuotations = require("./process-quotations");
 const selectors = {
   XPathSelector: simpleXpathSelector,
   CssSelector: nodeSelector,
-  FragmentSelector: (tree, value, annotation, addProps = true) => {
-    return nodeSelector(tree, "#" + value, annotation, addProps);
+  FragmentSelector: ({ tree, value, annotation, addProps = true }) => {
+    return nodeSelector({ tree, value: "#" + value, annotation, addProps });
   }
 };
 
-module.exports = function getNode(tree, selector, annotation) {
+module.exports = function getNode({ tree, selector, annotation, stimulus }) {
   // Need to check `refinedBy`. If so and refining selector is quote or text-position then process using node as root tree
   if (selector.refinedBy) {
-    const node = selectors[selector.type](
+    const node = selectors[selector.type]({
       tree,
-      selector.value,
+      value: selector.value,
       annotation,
-      false
-    );
+      addProps: false,
+      stimulus
+    });
     const target = { ...annotation.target, selector: selector.refinedBy };
     if (selector.refinedBy.type === "TextQuoteSelector") {
-      processQuotations(node, null, [{ ...annotation, target }]);
+      processQuotations(node, null, [{ ...annotation, target }], { stimulus });
     } else if (selector.refinedBy.type === "TextPositionSelector") {
-      processPositions(node, null, [{ ...annotation, target }]);
+      processPositions(node, null, [{ ...annotation, target }], { stimulus });
     } else {
-      return selectors[selector.refinedBy.type](
-        node,
-        selector.refinedBy.value,
-        {
+      return selectors[selector.refinedBy.type]({
+        tree: node,
+        value: selector.refinedBy.value,
+        annotation: {
           ...annotation,
           target
-        }
-      );
+        },
+        stimulus
+      });
     }
   } else {
-    return selectors[selector.type](tree, selector.value, annotation);
+    return selectors[selector.type]({
+      tree,
+      value: selector.value,
+      annotation,
+      stimulus
+    });
   }
 };

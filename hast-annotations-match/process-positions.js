@@ -23,7 +23,12 @@ For each selector:
 5. Add link to annotations collection id in head
 */
 
-module.exports = function processPositions(tree, file, positionAnnotations) {
+module.exports = function processPositions(
+  tree,
+  file,
+  positionAnnotations,
+  { stimulus }
+) {
   // Sort annotations based on selector.start, merge overlapping annotations
   positionAnnotations.sort(
     (a, b) => a.target.selector.start - b.target.selector.start
@@ -42,10 +47,24 @@ module.exports = function processPositions(tree, file, positionAnnotations) {
     // That way we have fewer nestd marks to worry about.
     // const { start, end } = annotation.target.selector;
     // debug("visitor start: ", count, start, end, count + node.value.length);
-    visitNode({ count, currentAnnotation: annotation, node, parent, index });
+    visitNode({
+      count,
+      currentAnnotation: annotation,
+      node,
+      parent,
+      index,
+      stimulus
+    });
     count = count + node.value.length;
   }
-  function visitNode({ count, currentAnnotation, node, parent, index }) {
+  function visitNode({
+    count,
+    currentAnnotation,
+    node,
+    parent,
+    index,
+    stimulus
+  }) {
     const { end } = currentAnnotation.target.selector;
     const startInNode = startIsInNode(count, currentAnnotation, node);
     const endInNode = endIsInNode(count, currentAnnotation, node);
@@ -54,7 +73,8 @@ module.exports = function processPositions(tree, file, positionAnnotations) {
       endInNode,
       count,
       node,
-      currentAnnotation
+      currentAnnotation,
+      stimulus
     });
     if (replacement) {
       replacementActions.push(() => {
@@ -69,18 +89,19 @@ module.exports = function processPositions(tree, file, positionAnnotations) {
           currentAnnotation: annotation,
           node: suffix,
           parent,
-          index: parent.children.indexOf(suffix)
+          index: parent.children.indexOf(suffix),
+          stimulus
         });
       }
     }
   }
 };
 
-function wrapNode(text, annotation) {
+function wrapNode(text, annotation, stimulus) {
   // If we decide to support linking purposes by rendering actual links then we need to change this and make sure we don't render nested links.
   // It's actually simpler in the meantime to support linking purposes by rendering a link button either after highlight or in sidebar.
   const node = h("mark", text);
-  addPropsToNode(node, annotation);
+  addPropsToNode(node, annotation, { stimulus });
   return node;
 }
 function getAnnotation(positionAnnotations) {
@@ -113,7 +134,8 @@ function processNode({
   endInNode,
   count,
   node,
-  currentAnnotation
+  currentAnnotation,
+  stimulus
 }) {
   const { start, end } = currentAnnotation.target.selector;
   let replacement;
@@ -126,7 +148,8 @@ function processNode({
     if (nodeValue.trim()) {
       const wrappedNode = wrapNode(
         node.value.slice(firstSplit, secondSplit),
-        currentAnnotation
+        currentAnnotation,
+        stimulus
       );
       const suffixValue = node.value.slice(secondSplit);
       suffix = { type: "text", value: suffixValue };
@@ -140,7 +163,8 @@ function processNode({
     if (nodeValue.trim()) {
       const wrappedNode = wrapNode(
         node.value.slice(firstSplit),
-        currentAnnotation
+        currentAnnotation,
+        stimulus
       );
       replacement = [prefix, wrappedNode];
     }
@@ -149,7 +173,8 @@ function processNode({
     const secondSplit = end - count;
     const wrappedNode = wrapNode(
       node.value.slice(0, secondSplit),
-      currentAnnotation
+      currentAnnotation,
+      stimulus
     );
     suffix = { type: "text", value: node.value.slice(secondSplit) };
     replacement = [wrappedNode, suffix];
@@ -160,7 +185,7 @@ function processNode({
     node.value.trim()
   ) {
     // debug("whitespace: ", !node.value.trim());
-    replacement = [wrapNode(node.value, currentAnnotation)];
+    replacement = [wrapNode(node.value, currentAnnotation, stimulus)];
   }
   return { replacement, suffix };
 }

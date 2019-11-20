@@ -6,7 +6,7 @@
  */
 "use strict";
 exports[
-  `tests/index.js TAP rehype-annotate basic > fixtures/css-single.input.html annotations 1`
+  `tests/index.js TAP rehype-annotate basic fixtures/css-single.input.html > fixtures/css-single.input.html annotations 1`
 ] = `
 Array [
   Object {
@@ -36,7 +36,7 @@ Array [
 `;
 
 exports[
-  `tests/index.js TAP rehype-annotate basic > fixtures/fragment-multibody.input.html annotations 1`
+  `tests/index.js TAP rehype-annotate basic fixtures/fragment-multibody.input.html > fixtures/fragment-multibody.input.html annotations 1`
 ] = `
 Array [
   Object {
@@ -81,7 +81,7 @@ Array [
 `;
 
 exports[
-  `tests/index.js TAP rehype-annotate basic > fixtures/range.input.html annotations 1`
+  `tests/index.js TAP rehype-annotate basic fixtures/range.input.html > fixtures/range.input.html annotations 1`
 ] = `
 Array [
   Object {
@@ -118,7 +118,7 @@ Array [
 `;
 
 exports[
-  `tests/index.js TAP rehype-annotate basic > fixtures/refinedby.input.html annotations 1`
+  `tests/index.js TAP rehype-annotate basic fixtures/refinedby.input.html > fixtures/refinedby.input.html annotations 1`
 ] = `
 Array [
   Object {
@@ -207,7 +207,7 @@ Array [
 `;
 
 exports[
-  `tests/index.js TAP rehype-annotate basic > fixtures/text-position.input.html annotations 1`
+  `tests/index.js TAP rehype-annotate basic fixtures/text-position.input.html > fixtures/text-position.input.html annotations 1`
 ] = `
 Array [
   Object {
@@ -310,7 +310,7 @@ Array [
 `;
 
 exports[
-  `tests/index.js TAP rehype-annotate basic > fixtures/text-quote.input.html annotations 1`
+  `tests/index.js TAP rehype-annotate basic fixtures/text-quote.input.html > fixtures/text-quote.input.html annotations 1`
 ] = `
 Array [
   Object {
@@ -463,7 +463,7 @@ Array [
 `;
 
 exports[
-  `tests/index.js TAP rehype-annotate basic > fixtures/xpath-single.input.html annotations 1`
+  `tests/index.js TAP rehype-annotate basic fixtures/xpath-single.input.html > fixtures/xpath-single.input.html annotations 1`
 ] = `
 Array [
   Object {

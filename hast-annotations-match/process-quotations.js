@@ -8,13 +8,18 @@ const SLICE_LENGTH = 32;
 const SLICE_RE = new RegExp("(.|[\r\n]){1," + String(SLICE_LENGTH) + "}", "g");
 const toString = require("hast-util-to-string");
 
-module.exports = function processQuotations(tree, file, quoteAnnotations) {
+module.exports = function processQuotations(
+  tree,
+  file,
+  quoteAnnotations,
+  { stimulus }
+) {
   let positionAnnotations = quoteAnnotations.map(processQuote);
   function processQuote(annotation, index) {
     return processor(tree, annotation);
   }
   positionAnnotations = positionAnnotations.filter(item => item);
-  processPositions(tree, file, positionAnnotations);
+  processPositions(tree, file, positionAnnotations, { stimulus });
 };
 
 function processor(tree, annotation, options = {}) {

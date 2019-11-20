@@ -3,10 +3,25 @@ const visit = require("unist-util-visit");
 const is = require("unist-util-is");
 const addPropsToNode = require("./add-props-to-node");
 
-module.exports = function rangeSelector(tree, selector, annotation) {
+module.exports = function rangeSelector({
+  tree,
+  selector,
+  annotation,
+  stimulus
+}) {
   const { startSelector, endSelector } = selector;
-  const startNode = getNode(tree, startSelector, annotation);
-  const endNode = getNode(tree, endSelector, annotation);
+  const startNode = getNode({
+    tree,
+    selector: startSelector,
+    annotation,
+    stimulus
+  });
+  const endNode = getNode({
+    tree,
+    selector: endSelector,
+    annotation,
+    stimulus
+  });
   let controlStart = false;
   let controlEnd = false;
   let selectedNodes = [startNode];
@@ -24,6 +39,6 @@ module.exports = function rangeSelector(tree, selector, annotation) {
   });
   selectedNodes = [...selectedNodes, endNode];
   selectedNodes.map(node => {
-    addPropsToNode(node, annotation, 0);
+    addPropsToNode(node, annotation, { stimulus });
   });
 };

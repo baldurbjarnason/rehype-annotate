@@ -13,14 +13,16 @@ const props = [
   "data-controller",
   "data-annotation-motivation",
   "class",
-  "data-annotation-purpose"
+  "data-annotation-purpose",
+  "data-annotation-type",
+  "data-target"
 ];
 const attributes = {};
 for (const prop of props) {
   attributes[prop] = info.find(info.html, prop).property;
 }
 
-module.exports = function addPropsToNode(node, annotation) {
+module.exports = function addPropsToNode(node, annotation, { stimulus }) {
   const { target } = annotation;
   const { body = [] } = annotation;
   let purposes = body.map(item => item.purpose);
@@ -37,5 +39,14 @@ module.exports = function addPropsToNode(node, annotation) {
   }
   if (purposes.length !== 0) {
     node.properties[attributes["data-annotation-purpose"]] = purposes;
+  }
+  if (stimulus) {
+    node.properties[attributes["data-controller"]] = ["annotation"];
+  }
+  if (stimulus && node.tagName === "mark") {
+    node.properties[attributes["data-annotation-type"]] = ["mark"];
+    node.properties[attributes["data-target"]] = "annotations.mark";
+  } else if (stimulus) {
+    node.properties[attributes["data-target"]] = "annotations.node";
   }
 };

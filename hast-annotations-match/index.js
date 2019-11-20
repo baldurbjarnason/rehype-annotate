@@ -3,7 +3,7 @@ const rangeSelector = require("./range-selector");
 const getNode = require("./get-node");
 const processPositions = require("./process-positions");
 const processQuotations = require("./process-quotations");
-const { selectAll } = require("hast-util-select");
+const { selectAll, select } = require("hast-util-select");
 
 module.exports = matchAnnotations;
 
@@ -37,7 +37,11 @@ For each selector:
 
 */
 
-function matchAnnotations(tree, file, { annotations, url, canonical }) {
+function matchAnnotations(
+  tree,
+  file,
+  { annotations, url, canonical, stimulus }
+) {
   // iterate through annotations
   let positionAnnotations = [];
   let quoteAnnotations = [];
@@ -56,16 +60,16 @@ function matchAnnotations(tree, file, { annotations, url, canonical }) {
           break;
         case "RangeSelector":
           // debug("using RangeSelector");
-          rangeSelector(tree, selector, annotation);
+          rangeSelector({ tree, selector, annotation, stimulus });
           break;
         default:
-          getNode(tree, selector, annotation);
+          getNode({ tree, selector, annotation, stimulus });
           break;
       }
     }
   }
-  processPositions(tree, file, positionAnnotations);
-  processQuotations(tree, file, quoteAnnotations);
+  processPositions(tree, file, positionAnnotations, { stimulus });
+  processQuotations(tree, file, quoteAnnotations, { stimulus });
   const sortedAnnotationsId = selectAll("[data-annotation-id]", tree).map(
     node => node.properties.dataAnnotationId
   );
@@ -73,6 +77,10 @@ function matchAnnotations(tree, file, { annotations, url, canonical }) {
     annotations.find(annotation => annotation.id === id)
   );
   file.data.annotations = sortedAnnotations;
+  if (stimulus) {
+    const body = select("body", tree);
+    body.properties.dataController = ["annotations"];
+  }
   function testSource(source) {
     return source === url || source === canonical;
   }

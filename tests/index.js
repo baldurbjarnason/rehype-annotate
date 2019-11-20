@@ -30,8 +30,9 @@ async function process(filepath, options) {
 tap.test("rehype-annotate", async t => {
   const fixtures = glob.sync("fixtures/*.input.html", { cwd: __dirname });
   for (const fixture of fixtures) {
-    await t.test("basic", async function(t) {
+    await t.test("basic " + fixture, async function(t) {
       const result = await process(path.join(__dirname, fixture), {
+        stimulus: fixture.includes("quote") || fixture.includes("xpath"),
         annotations: require("./" +
           fixture.replace("input.html", "annotations.json")).items,
         url: `https://example.com/tests/${fixture.replace(__dirname, "")}`,
