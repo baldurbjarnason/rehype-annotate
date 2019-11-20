@@ -24,7 +24,7 @@ async function process(filepath, options) {
     console.log(err);
     console.error(report(err));
   }
-  return String(file);
+  return file;
 }
 
 tap.test("rehype-annotate", async t => {
@@ -45,7 +45,8 @@ tap.test("rehype-annotate", async t => {
           path.join(__dirname, fixture.replace("input.html", "output.html"))
         )
       );
-      t.equal(result, expected);
+      t.matchSnapshot(result.data.annotations, `${fixture} annotations`);
+      t.equal(String(result), expected);
       t.end();
     });
   }

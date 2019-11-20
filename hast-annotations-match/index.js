@@ -3,6 +3,7 @@ const rangeSelector = require("./range-selector");
 const getNode = require("./get-node");
 const processPositions = require("./process-positions");
 const processQuotations = require("./process-quotations");
+const { selectAll } = require("hast-util-select");
 
 module.exports = matchAnnotations;
 
@@ -65,6 +66,13 @@ function matchAnnotations(tree, file, { annotations, url, canonical }) {
   }
   processPositions(tree, file, positionAnnotations);
   processQuotations(tree, file, quoteAnnotations);
+  const sortedAnnotationsId = selectAll("[data-annotations-id]", tree).map(
+    node => node.properties.dataAnnotationsId
+  );
+  const sortedAnnotations = Array.from(new Set(sortedAnnotationsId)).map(id =>
+    annotations.find(annotation => annotation.id === id)
+  );
+  file.data.annotations = sortedAnnotations;
   function testSource(source) {
     return source === url || source === canonical;
   }
