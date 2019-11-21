@@ -10,7 +10,6 @@
       "created": "2015-10-13T13:00:00Z",
       "body": [
         {
-          "type": "TextualBody",
           "value": "<p>j'adore !</p>",
           "format": "text/html",
           "language": "fr",
@@ -37,7 +36,7 @@
         {
           "type": "TextualBody",
           "value": "<p>j'adore !</p>",
-          "format": "text/html",
+          "format": "text/markdown",
           "language": "fr",
           "purpose": "commenting"
         }
@@ -225,10 +224,8 @@
       "body": [
         {
           "type": "TextualBody",
-          "value": "<p>j'adore !</p>",
-          "format": "text/html",
-          "language": "fr",
-          "purpose": "commenting"
+          "value": "<p>I adore!</p>",
+          "format": "text/html"
         }
       ],
       "target": {

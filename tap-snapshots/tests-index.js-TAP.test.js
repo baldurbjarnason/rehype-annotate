@@ -366,7 +366,6 @@ Array [
         "format": "text/html",
         "language": "fr",
         "purpose": "commenting",
-        "type": "TextualBody",
         "value": "<p>j'adore !</p>",
       },
     ],
@@ -388,7 +387,7 @@ Array [
   Object {
     "body": Array [
       Object {
-        "format": "text/html",
+        "format": "text/markdown",
         "language": "fr",
         "purpose": "commenting",
         "type": "TextualBody",
@@ -439,10 +438,8 @@ Array [
     "body": Array [
       Object {
         "format": "text/html",
-        "language": "fr",
-        "purpose": "commenting",
         "type": "TextualBody",
-        "value": "<p>j'adore !</p>",
+        "value": "<p>I adore!</p>",
       },
     ],
     "created": "2015-10-13T13:00:00Z",
