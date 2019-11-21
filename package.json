@@ -1,6 +1,7 @@
 {
-  "name": "functions",
-  "description": "Cloud Functions for Firebase",
+  "name": "rehype-annotate",
+  "version": "0.1.0",
+  "description": "rehype plugin to match W3C Web Annotations to source locations",
   "scripts": {
     "lint": "healthier && prettier --write --plugin-search-dir=. '**/*.{js,json,css,yml,svelte}'",
     "pretest": "npm run lint",
