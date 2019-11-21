@@ -22,6 +22,8 @@ npm install RebusFoundation/rehype-annotate
 
 ## Use
 
+`rehype-annotate` should be used as a `rehype` or `unified` plugin to match annotations to a `hast` syntax tree.
+
 ```js
 const vfile = require("to-vfile");
 const unified = require("unified");
@@ -32,27 +34,31 @@ const report = require("vfile-reporter");
 const glob = require("glob");
 const path = require("path");
 
-const filepath = 'path/to/example/htmlfile.html'
-async function process (options) {
-  const input = await vfile.read(filepath);
-  const file = await unified()
+async function process (file, options) {
+  return unified()
     .use(parse)
     .use(annotate, options)
     .use(stringify)
-    .process(input);
-  console.log(report(file));
-  console.log(String(file))
+    .process(await vfile.read(file));
 }
 
 const options = {
   // Should be an array of W3C Web Annotations
   annotations: require('./path/to/annotations/json'),
-  url: "the base url for the original html"
-  canonical: "the canonical url for the html",
+  // the base url for the original html
+  url: "https://syndicated.example.com/annotated.html",
+  // the canonical url for the html
+  canonical: "https://example.org/annotated.html",
+  // Enable or disable stimulusJS support
   stimulus: true
 }
 
-process()
+process('path/to/example/htmlfile.html', options)
+  .then(file => {
+    console.log(report(file));
+    console.log(String(file))
+  })
+  .catch(err => console.error(err))
 ```
 
 The above code will print whatever issues are found out to the console, followed by the processed HTML.
