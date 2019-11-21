@@ -123,7 +123,12 @@ And `rehype-annotate` is run with the following annotation:
 Then the result should be (provided the `url` or `canonical` options match the `source`):
 
 ```html
-<h2 id="test-id" data-annotation-id="http://example.com/annotations1" data-annotation-motivation="bookmarking" class="Bookmarked" data-annotation-purpose="tagging describing">Stirs ending exceeding fond muster fall Bagshot.</h2>
+<h2 
+  id="test-id" 
+  data-annotation-id="http://example.com/annotations1" 
+  data-annotation-motivation="bookmarking" 
+  class="Bookmarked" 
+  data-annotation-purpose="tagging describing">Stirs ending exceeding fond muster fall Bagshot.</h2>
 ```
 
 #### Example (text range match):
@@ -165,7 +170,9 @@ And `rehype-annotate` is run with the following annotation:
 Then the result should be (provided the `url` or `canonical` options match the `source`):
 
 ```html
-<p><mark data-annotation-id="http://example.com/annotations1" data-annotation-motivation="highlighting" class="Bookmarked" data-annotation-purpose="commenting">Resilient Garulf key quest abandon knives</mark> lifted niceties tonight disappeared strongest plates. Farthing ginger large. Nobody tosses a Dwarf. Makes Shadowfax nearly lesser south deceive hates 22nd missing others!</p>
+<p>
+  <mark data-annotation-id="http://example.com/annotations1" data-annotation-motivation="highlighting" class="Bookmarked" data-annotation-purpose="commenting">Resilient Garulf key quest abandon knives</mark> lifted niceties tonight disappeared strongest plates. Farthing ginger large. Nobody tosses a Dwarf. Makes Shadowfax nearly lesser south deceive hates 22nd missing others!
+</p>
 ```
 
 #### `options`
@@ -200,7 +207,14 @@ Attributes added to a `mark` element that's created to wrap a selected text rang
 For every `annotation.body` of the type `TextualBody`, the html of the body is parsed and sanitised and inserted as a template tag:
 
 ```html
-<template data-template-id="http://example.com/annotations1" data-controller="template" data-template-purpose="commenting" lang="fr" data-target="annotations.template"><p>j'adore !</p></template>
+<template 
+  data-template-id="http://example.com/annotations1" 
+  ata-controller="template" 
+  data-template-purpose="commenting"
+  lang="fr"
+  data-target="annotations.template">
+    <p>j'adore !</p>
+</template>
 ```
 
 The `data-template-id` attribute matches the `id` of the parent annotation. **Note:** *annotations can have multiple bodies*.
