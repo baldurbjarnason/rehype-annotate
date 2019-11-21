@@ -204,12 +204,12 @@ Attributes added to a `mark` element that's created to wrap a selected text rang
 * `data-target="annotations.mark"`
 * `data-annotation-type="mark"`
 
-For every `annotation.body` of the type `TextualBody`, the html of the body is parsed and sanitised and inserted as a template tag:
+For every `annotation.body` of the type `TextualBody` and whose `format` is `text/html`, the html of the body is parsed and sanitised and inserted as a template tag:
 
 ```html
 <template 
   data-template-id="http://example.com/annotations1" 
-  ata-controller="template" 
+  data-controller="template" 
   data-template-purpose="commenting"
   lang="fr"
   data-target="annotations.template">
@@ -218,6 +218,8 @@ For every `annotation.body` of the type `TextualBody`, the html of the body is p
 ```
 
 The `data-template-id` attribute matches the `id` of the parent annotation. **Note:** *annotations can have multiple bodies*.
+
+*TODO: implement support for `text/plain` and `text/markdown` annotation bodies.*
 
 ## Selector Support
 
