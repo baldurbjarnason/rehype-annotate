@@ -4,6 +4,7 @@ const getNode = require("./get-node");
 const processPositions = require("./process-positions");
 const processQuotations = require("./process-quotations");
 const { selectAll, select } = require("hast-util-select");
+const renderTemplates = require("./render-templates");
 
 module.exports = matchAnnotations;
 
@@ -80,6 +81,9 @@ function matchAnnotations(
   if (stimulus) {
     const body = select("body", tree);
     body.properties.dataController = ["annotations"];
+    const templates = renderTemplates(file.data.annotations || []);
+    // console.log(templates);
+    body.children = templates.concat(body.children);
   }
   function testSource(source) {
     return source === url || source === canonical;

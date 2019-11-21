@@ -1,4 +1,4 @@
-# rehype-annotate
+# `rehype-annotate`
 
 This `rehype` plugin matches W3C-style annotations to their targets in the parsed HTML file. It adds attributes and hooks to those locations for further behaviours and it wraps text range selections in `mark` elements.
 
