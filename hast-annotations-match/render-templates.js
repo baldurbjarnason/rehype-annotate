@@ -44,9 +44,7 @@ function renderTemplate(annotation) {
     if (body.type === "TextualBody" && body.format === "text/html") {
       const wrapper = htmlProcessor.parse(`<template>${body.value}</template>`)
         .children[0];
-      wrapper.properties[
-        attributes["data-template-id"]
-      ] = `${annotation.id}-body${index}`;
+      wrapper.properties[attributes["data-template-id"]] = `${annotation.id}`;
       wrapper.properties[attributes["data-controller"]] = "template";
       if (body.purpose) {
         wrapper.properties[attributes["data-template-purpose"]] = body.purpose;

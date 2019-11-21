@@ -41,7 +41,7 @@ For each selector:
 function matchAnnotations(
   tree,
   file,
-  { annotations, url, canonical, stimulus }
+  { annotations, url = "", canonical = "", stimulus }
 ) {
   // iterate through annotations
   let positionAnnotations = [];
@@ -85,7 +85,7 @@ function matchAnnotations(
     // console.log(templates);
     body.children = templates.concat(body.children);
   }
-  function testSource(source) {
+  function testSource(source = "") {
     return source === url || source === canonical;
   }
   return tree;
