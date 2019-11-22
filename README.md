@@ -4,7 +4,7 @@ This [`rehype`](https://github.com/rehypejs/rehype) plugin matches [W3C-style an
 
 Note: this modifies the original tree and in some cases can add class attributes. Make sure to sanitise the tree afterwards.
 
-The script _does not_ embed annotation-provided CSS as there don't seem to be many tools in the `unified`/`rehype` ecosystem for sanitising user-provided CSS. If a tool like that appears, then I'll reconsider embedding CSS.
+The script _does not_ embed annotation-provided styles as there don't seem to be many tools in the `unified`/`rehype` ecosystem for sanitising user-provided CSS. If a tool like that appears (or if we decided to implement one), then I'll reconsider embedding CSS.
 
 ## License
 
@@ -12,9 +12,9 @@ To be decided.
 
 ## Install
 
-I haven't yet published this package on npm but you can install it directly from the GitHub repository.
+I haven't yet published this package on `npm` but you can install it directly from the GitHub repository.
 
-[npm](https://docs.npmjs.com/cli/install):
+[`npm`](https://docs.npmjs.com/cli/install):
 
 ```sh
 npm install RebusFoundation/rehype-annotate
