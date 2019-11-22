@@ -6,7 +6,8 @@
     "lint": "tsc --checkJs --allowJs --noEmit --lib es2015 --moduleResolution node  index.js && healthier && prettier --write --plugin-search-dir=. '**/*.{js,json,css,yml,svelte}'",
     "pretest": "npm run lint",
     "prepublishOnly": "npm run lint",
-    "test": "tap tests/index.js"
+    "test": "tap tests/index.js",
+    "snapshots": "TAP_SNAPSHOT=1 npm run test"
   },
   "engines": {
     "node": "10"
@@ -27,8 +28,11 @@
     "hastscript": "^5.1.1",
     "property-information": "^5.3.0",
     "rehype-parse": "^6.0.2",
+    "rehype-raw": "^4.0.1",
     "rehype-sanitize": "^3.0.0",
     "rehype-stringify": "^6.0.1",
+    "remark-parse": "^7.0.2",
+    "remark-rehype": "^5.0.0",
     "to-vfile": "^6.0.0",
     "unified": "^8.4.2",
     "unist-util-is": "^4.0.1",

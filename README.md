@@ -4,7 +4,7 @@ This [`rehype`](https://github.com/rehypejs/rehype) plugin matches [W3C-style an
 
 Note: this modifies the original tree and in some cases can add class attributes. Make sure to sanitise the tree afterwards.
 
-The script _does not_ embed annotation-provided styles as there don't seem to be many tools in the `unified`/`rehype` ecosystem for sanitising user-provided CSS. If a tool like that appears (or if we decided to implement one), then I'll reconsider embedding CSS.
+The script _does not_ embed annotation-provided styles as there don't seem to be many tools in the `unified`/`rehype` ecosystem for sanitising user-provided CSS. If a tool like that appears (or if we decided to implement one), then we will reconsider embedding CSS.
 
 ## License
 
@@ -12,7 +12,7 @@ To be decided.
 
 ## Install
 
-I haven't yet published this package on `npm` but you can install it directly from the GitHub repository.
+We haven't yet published this package on `npm` but you can install it directly from the GitHub repository.
 
 [`npm`](https://docs.npmjs.com/cli/install):
 
@@ -225,7 +225,19 @@ For every `annotation.body` of the type `TextualBody` and whose `format` is `tex
 
 The `data-template-id` attribute matches the `id` of the parent annotation. **Note:** *annotations can have multiple bodies*.
 
-*TODO: implement support for `text/plain` and `text/markdown` annotation bodies.*
+`text/markdown` annotation bodies are rendered using `remark-parse`, `remark-rehyp`, and `rehype-raw` before being sanitised using `rehype-sanitize`. Both CommonMark and markdown footnotes are enabled. Passing options to `remark-parse` is not yet supported. `rehype-raw` lets you mix HTML into your markdown source, provided the elements you use are a included in the [default schema used by `rehype-sanitize`](https://github.com/syntax-tree/hast-util-sanitize/blob/master/lib/github.json)
+
+All formats other than `text/html` or `text/markdown` are rendered as escaped plain text content in the template tag.
+
+```html
+<template
+  data-template-id="http://example.com/annotations1" 
+  data-controller="template"
+  data-template-purpose="commenting"
+  lang="fr" 
+  data-target="annotations.template">&#x3C;p>j'adore !&#x3C;/p>
+</template>
+```
 
 ## Selector Support
 

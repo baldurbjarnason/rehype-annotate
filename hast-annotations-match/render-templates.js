@@ -1,10 +1,14 @@
-// const h = require("hastscript");
 // @ts-ignore
 const gh = require("hast-util-sanitize/lib/github");
 const sanitize = require("rehype-sanitize");
 const unified = require("unified");
 const parse = require("rehype-parse");
 const info = require("property-information");
+const markdown = require("remark-parse");
+const remark2rehype = require("remark-rehype");
+const stringify = require("rehype-stringify");
+const raw = require("rehype-raw");
+const h = require("hastscript");
 
 /* 
 ## Props
@@ -30,6 +34,12 @@ const htmlProcessor = unified()
   .use(parse, { fragment: true })
   .use(sanitize, gh);
 
+const markdownProcessor = unified()
+  .use(markdown, { commonmark: true, footnotes: true })
+  .use(remark2rehype, { allowDangerousHTML: true, commonmark: true })
+  .use(raw)
+  .use(stringify);
+
 module.exports = function renderTemplates(annotations) {
   // This line flattens the resulting map and filters out undefineds/nulls.
   return Array.prototype.concat
@@ -42,9 +52,18 @@ function renderTemplate(annotation) {
     return annotation.body.map(renderBody);
   }
   function renderBody(body, index) {
-    if (body.type === "TextualBody" && body.format === "text/html") {
-      const wrapper = htmlProcessor.parse(`<template>${body.value}</template>`)
-        .children[0];
+    if (body.type === "TextualBody") {
+      let wrapper;
+      if (body.format === "text/html") {
+        wrapper = htmlProcessor.parse(`<template>${body.value}</template>`)
+          .children[0];
+      } else if (body.format === "text/markdown") {
+        const html = markdownProcessor.processSync(`${body.value}`);
+        wrapper = htmlProcessor.parse(`<template>${String(html)}</template>`)
+          .children[0];
+      } else {
+        wrapper = h("template", body.value);
+      }
       wrapper.properties[attributes["data-template-id"]] = `${annotation.id}`;
       wrapper.properties[attributes["data-controller"]] = "template";
       if (body.purpose) {

@@ -316,7 +316,7 @@ Array [
   Object {
     "body": Array [
       Object {
-        "format": "text/html",
+        "format": "text/plain",
         "language": "fr",
         "purpose": "commenting",
         "type": "TextualBody",
@@ -391,7 +391,7 @@ Array [
         "language": "fr",
         "purpose": "commenting",
         "type": "TextualBody",
-        "value": "<p>j'adore !</p>",
+        "value": "\\n\\nj'adore !\\n\\n",
       },
     ],
     "created": "2015-10-13T13:00:00Z",

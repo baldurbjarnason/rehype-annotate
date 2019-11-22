@@ -35,7 +35,7 @@
       "body": [
         {
           "type": "TextualBody",
-          "value": "<p>j'adore !</p>",
+          "value": "\n\nj'adore !\n\n",
           "format": "text/markdown",
           "language": "fr",
           "purpose": "commenting"
@@ -153,7 +153,7 @@
         {
           "type": "TextualBody",
           "value": "<p>j'adore !</p>",
-          "format": "text/html",
+          "format": "text/plain",
           "language": "fr",
           "purpose": "commenting"
         }
