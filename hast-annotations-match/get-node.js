@@ -6,12 +6,30 @@ const processQuotations = require("./process-quotations");
 const selectors = {
   XPathSelector: simpleXpathSelector,
   CssSelector: nodeSelector,
-  FragmentSelector: ({ tree, value, annotation, addProps = true }) => {
-    return nodeSelector({ tree, value: "#" + value, annotation, addProps });
+  FragmentSelector: ({
+    tree,
+    value,
+    annotation,
+    addProps = true,
+    stimulus
+  }) => {
+    return nodeSelector({
+      tree,
+      value: "#" + value,
+      annotation,
+      addProps,
+      stimulus
+    });
   }
 };
 
-module.exports = function getNode({ tree, selector, annotation, stimulus }) {
+module.exports = getNode;
+
+/**
+ *
+ * @param {{tree: Object, selector: Object, annotation: Object, stimulus: boolean}} param0 - selector options
+ */
+function getNode({ tree, selector, annotation, stimulus }) {
   // Need to check `refinedBy`. If so and refining selector is quote or text-position then process using node as root tree
   if (selector.refinedBy) {
     const node = selectors[selector.type]({
@@ -45,4 +63,4 @@ module.exports = function getNode({ tree, selector, annotation, stimulus }) {
       stimulus
     });
   }
-};
+}

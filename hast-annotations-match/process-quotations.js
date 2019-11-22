@@ -26,7 +26,6 @@ function processor(tree, annotation, options = {}) {
   const { selector } = annotation.target;
   const { prefix, exact, suffix } = selector;
 
-  const { hint } = options;
   const dmp = new DiffMatchPatch();
 
   const textContent = toString(tree);
@@ -35,7 +34,7 @@ function processor(tree, annotation, options = {}) {
   // Work around a hard limit of the DiffMatchPatch bitap implementation.
   // The search pattern must be no more than SLICE_LENGTH characters.
   const slices = exact.match(SLICE_RE);
-  let loc = (hint === textContent.length / 2) | 0;
+  let loc = 0;
   let start = Number.POSITIVE_INFINITY;
   let end = Number.NEGATIVE_INFINITY;
   let result = -1;

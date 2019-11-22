@@ -1,4 +1,5 @@
 // const h = require("hastscript");
+// @ts-ignore
 const gh = require("hast-util-sanitize/lib/github");
 const sanitize = require("rehype-sanitize");
 const unified = require("unified");

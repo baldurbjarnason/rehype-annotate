@@ -1,8 +1,14 @@
 const addPropsToNode = require("./add-props-to-node");
 
 // Based on simple-xpath-selector from https://github.com/tilgovi/simple-xpath-position/blob/master/src/xpath.js MIT license
-// Doesn't actually work
-module.exports = function simpleXpathSelector({
+
+module.exports = simpleXpathSelector;
+
+/**
+ *
+ * @param {{tree: Object, value: string, annotation: Object, addProps: undefined | boolean, stimulus: boolean}} param0 - selector options
+ */
+function simpleXpathSelector({
   tree,
   value,
   annotation,
@@ -14,8 +20,13 @@ module.exports = function simpleXpathSelector({
     addPropsToNode(node, annotation, { stimulus });
   }
   return node;
-};
+}
 
+/**
+ *
+ * @param {string} path - the xpath string
+ * @param {*} root
+ */
 function fallbackResolve(path, root) {
   const steps = path.split("/");
   let node = root;
@@ -24,9 +35,9 @@ function fallbackResolve(path, root) {
     if (step === undefined) break;
     if (step === ".") continue;
     // eslint-disable-next-line
-    let [name, position] = step.split(/[\[\]]/); // prettier-ignore
+    let [name, xpathPosition] = step.split(/[\[\]]/); // prettier-ignore
     name = name.replace("_default_:", "");
-    position = position ? parseInt(position) : 1;
+    const position = xpathPosition ? parseInt(xpathPosition) : 1;
     node = findChild(node, name, position);
   }
   return node;

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "rehype plugin to match W3C Web Annotations to source locations",
   "scripts": {
-    "lint": "healthier && prettier --write --plugin-search-dir=. '**/*.{js,json,css,yml,svelte}'",
+    "lint": "tsc --checkJs --allowJs --noEmit --lib es2015 --moduleResolution node  index.js && healthier && prettier --write --plugin-search-dir=. '**/*.{js,json,css,yml,svelte}'",
     "pretest": "npm run lint",
     "prepublishOnly": "npm run lint",
     "test": "tap tests/index.js"
@@ -18,6 +18,7 @@
     ]
   },
   "dependencies": {
+    "@types/node": "^12.12.11",
     "diff-match-patch": "1.0.4",
     "glob": "7.1.6",
     "hast-util-sanitize": "^2.0.1",
@@ -29,6 +30,7 @@
     "rehype-sanitize": "^3.0.0",
     "rehype-stringify": "^6.0.1",
     "to-vfile": "^6.0.0",
+    "typescript": "^3.7.2",
     "unified": "^8.4.2",
     "unist-util-is": "^4.0.1",
     "unist-util-visit": "^2.0.1",
