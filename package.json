@@ -2,6 +2,7 @@
   "name": "rehype-annotate",
   "version": "0.1.0",
   "description": "rehype plugin to match W3C Web Annotations to source locations",
+  "license": "GPL-3.0-or-later",
   "scripts": {
     "lint": "tsc --checkJs --allowJs --noEmit --lib es2015 --moduleResolution node  index.js && healthier && prettier --write --plugin-search-dir=. '**/*.{js,json,css,yml,svelte}'",
     "pretest": "npm run lint",
