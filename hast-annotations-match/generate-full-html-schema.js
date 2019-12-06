@@ -269,4 +269,7 @@ schema.tagNames = Array.from(new Set(schema.tagNames));
 
 module.exports = schema;
 
-fs.writeFileSync("hast-annotations-match/full-html-schema.json", JSON.stringify(schema, null, 4));
+fs.writeFileSync(
+  "hast-annotations-match/full-html-schema.json",
+  JSON.stringify(schema, null, 4)
+);
