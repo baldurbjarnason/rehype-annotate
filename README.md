@@ -8,7 +8,7 @@ The script _does not_ embed annotation-provided styles as there don't seem to be
 
 ## License
 
-GPL 3.0 or later
+Apache 2.0
 
 ## Install
 
