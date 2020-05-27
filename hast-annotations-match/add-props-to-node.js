@@ -40,7 +40,7 @@ module.exports = function addPropsToNode(node, annotation, { stimulus }) {
   if (purposes.length !== 0) {
     node.properties[attributes["data-annotation-purpose"]] = purposes;
   }
-  if (stimulus) {
+  if (stimulus && annotation) {
     node.properties[attributes["data-controller"]] = ["annotation"];
   }
   if (stimulus && node.tagName === "mark") {
