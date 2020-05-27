@@ -78,7 +78,7 @@ function matchAnnotations(
     annotations.find(annotation => annotation.id === id)
   );
   file.data.annotations = sortedAnnotations;
-  if (stimulus) {
+  if (stimulus && annotations.length !== 0) {
     const body = select("body", tree);
     body.properties.dataController = ["annotations"];
     const templates = renderTemplates(file.data.annotations);
