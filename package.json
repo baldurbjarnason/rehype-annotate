@@ -11,7 +11,7 @@
     "snapshots": "TAP_SNAPSHOT=1 npm run test"
   },
   "engines": {
-    "node": "10"
+    "node": ">10"
   },
   "healthier": {
     "ignore": [
