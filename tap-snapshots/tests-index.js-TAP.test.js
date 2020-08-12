@@ -4,10 +4,8 @@
  * Re-generate by setting TAP_SNAPSHOT=1 and running tests.
  * Make sure to inspect the output below.  Do not ignore changes!
  */
-"use strict";
-exports[
-  `tests/index.js TAP rehype-annotate basic fixtures/css-single.input.html > fixtures/css-single.input.html annotations 1`
-] = `
+'use strict'
+exports[`tests/index.js TAP rehype-annotate basic fixtures/css-single.input.html > fixtures/css-single.input.html annotations 1`] = `
 Array [
   Object {
     "created": "2015-10-13T13:00:00Z",
@@ -33,11 +31,9 @@ Array [
     "type": "Annotation",
   },
 ]
-`;
+`
 
-exports[
-  `tests/index.js TAP rehype-annotate basic fixtures/fragment-multibody.input.html > fixtures/fragment-multibody.input.html annotations 1`
-] = `
+exports[`tests/index.js TAP rehype-annotate basic fixtures/fragment-multibody.input.html > fixtures/fragment-multibody.input.html annotations 1`] = `
 Array [
   Object {
     "body": Array [
@@ -78,11 +74,54 @@ Array [
     "type": "Annotation",
   },
 ]
-`;
+`
 
-exports[
-  `tests/index.js TAP rehype-annotate basic fixtures/range.input.html > fixtures/range.input.html annotations 1`
-] = `
+exports[`tests/index.js TAP rehype-annotate basic fixtures/poetry-linebreaks.input.html > fixtures/poetry-linebreaks.input.html annotations 1`] = `
+Array [
+  Object {
+    "body": Array [
+      Object {
+        "content": "<div class=\\"stanzanoindent\\" data-ink-location=\\"25\\">Notre barque glisse sur l’onde<br>\\nQue dorent de brûlants rayons;<br>\\nSa marche lente et vagabonde<br>\\nTémoigne que des bras mignons,<br>\\nPleins d’ardeur, mais encore novices,<br>\\nTout fiers de ce nouveau travail,<br>\\nMènent au gré de leurs caprices<br>\\nLes rames et le gouvernail.</div>",
+        "language": null,
+      },
+    ],
+    "id": "https://ink-api-dev-dot-thematic-cider-139815.appspot.com/notes/ePBawQ5aWWfiN6nyLprBmH-9fe723b3cf",
+    "motivation": "highlighting",
+    "published": "2020-08-12T11:11:32.527Z",
+    "shortId": "ePBawQ5aWWfiN6nyLprBmH-9fe723b3cf",
+    "source": Object {
+      "author": Array [],
+      "contributor": Array [],
+      "copyrightHolder": Array [],
+      "creator": Array [],
+      "editor": Array [],
+      "id": "https://ink-api-dev-dot-thematic-cider-139815.appspot.com/sources/ePBawQ5aWWfiN6nyLprBmH-f2e212bc7d/",
+      "illustrator": Array [],
+      "name": "Alice",
+      "published": "2020-07-14T16:23:55.125Z",
+      "publisher": Array [],
+      "shortId": "ePBawQ5aWWfiN6nyLprBmH-f2e212bc7d",
+      "translator": Array [],
+      "type": "Source",
+      "updated": "2020-07-14T16:23:55.125Z",
+    },
+    "tags": Array [],
+    "target": Object {
+      "selector": Object {
+        "exact": "Notre barque glisse sur l’onde\\nQue dorent de brûlants rayons;\\nSa marche lente et vagabonde\\nTémoigne que des bras mignons,\\nPleins d’ardeur, mais encore novices,\\nTout fiers de ce nouveau travail,\\nMènent au gré de leurs caprices\\nLes rames et le gouvernail.",
+        "prefix": "T TAYLOR, BREAD STREET HILL.\\n\\n\\n\\n",
+        "suffix": "\\nSoudain trois cris se font ente",
+        "type": "TextQuoteSelector",
+      },
+      "source": "https://example.com/tests/fixtures/poetry-linebreaks.input.html",
+    },
+    "type": "Note",
+    "updated": "2020-08-12T11:11:32.527Z",
+  },
+]
+`
+
+exports[`tests/index.js TAP rehype-annotate basic fixtures/range.input.html > fixtures/range.input.html annotations 1`] = `
 Array [
   Object {
     "created": "2015-10-13T13:00:00Z",
@@ -115,11 +154,9 @@ Array [
     "type": "Annotation",
   },
 ]
-`;
+`
 
-exports[
-  `tests/index.js TAP rehype-annotate basic fixtures/refinedby.input.html > fixtures/refinedby.input.html annotations 1`
-] = `
+exports[`tests/index.js TAP rehype-annotate basic fixtures/refinedby.input.html > fixtures/refinedby.input.html annotations 1`] = `
 Array [
   Object {
     "body": Array [
@@ -204,11 +241,9 @@ Array [
     "type": "Annotation",
   },
 ]
-`;
+`
 
-exports[
-  `tests/index.js TAP rehype-annotate basic fixtures/text-position.input.html > fixtures/text-position.input.html annotations 1`
-] = `
+exports[`tests/index.js TAP rehype-annotate basic fixtures/text-position.input.html > fixtures/text-position.input.html annotations 1`] = `
 Array [
   Object {
     "body": Array [
@@ -307,11 +342,9 @@ Array [
     "type": "Annotation",
   },
 ]
-`;
+`
 
-exports[
-  `tests/index.js TAP rehype-annotate basic fixtures/text-quote.input.html > fixtures/text-quote.input.html annotations 1`
-] = `
+exports[`tests/index.js TAP rehype-annotate basic fixtures/text-quote.input.html > fixtures/text-quote.input.html annotations 1`] = `
 Array [
   Object {
     "body": Array [
@@ -457,11 +490,9 @@ Array [
     "type": "Annotation",
   },
 ]
-`;
+`
 
-exports[
-  `tests/index.js TAP rehype-annotate basic fixtures/xpath-single.input.html > fixtures/xpath-single.input.html annotations 1`
-] = `
+exports[`tests/index.js TAP rehype-annotate basic fixtures/xpath-single.input.html > fixtures/xpath-single.input.html annotations 1`] = `
 Array [
   Object {
     "created": "2015-10-13T13:00:00Z",
@@ -488,4 +519,4 @@ Array [
     "type": "Annotation",
   },
 ]
-`;
+`

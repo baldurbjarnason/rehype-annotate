@@ -1,0 +1,70 @@
+{
+  "id": "http://example.org/page1",
+  "type": "AnnotationPage",
+  "label": "Annotations Page",
+  "items": [
+    {
+      "id": "https://ink-api-dev-dot-thematic-cider-139815.appspot.com/notes/ePBawQ5aWWfiN6nyLprBmH-9fe723b3cf",
+      "motivation": "highlighting",
+      "target": {
+        "source": "https://example.com/tests/fixtures/poetry-linebreaks.input.html",
+        "selector": {
+          "type": "TextQuoteSelector",
+          "exact": "Notre barque glisse sur l’onde\nQue dorent de brûlants rayons;\nSa marche lente et vagabonde\nTémoigne que des bras mignons,\nPleins d’ardeur, mais encore novices,\nTout fiers de ce nouveau travail,\nMènent au gré de leurs caprices\nLes rames et le gouvernail.",
+          "prefix": "T TAYLOR, BREAD STREET HILL.\n\n\n\n",
+          "suffix": "\nSoudain trois cris se font ente"
+        }
+      },
+      "published": "2020-08-12T11:11:32.527Z",
+      "updated": "2020-08-12T11:11:32.527Z",
+      "body": [
+        {
+          "content": "<div class=\"stanzanoindent\" data-ink-location=\"25\">Notre barque glisse sur l’onde<br>\nQue dorent de brûlants rayons;<br>\nSa marche lente et vagabonde<br>\nTémoigne que des bras mignons,<br>\nPleins d’ardeur, mais encore novices,<br>\nTout fiers de ce nouveau travail,<br>\nMènent au gré de leurs caprices<br>\nLes rames et le gouvernail.</div>",
+          "language": null
+        }
+      ],
+      "tags": [],
+      "source": {
+        "id": "https://ink-api-dev-dot-thematic-cider-139815.appspot.com/sources/ePBawQ5aWWfiN6nyLprBmH-f2e212bc7d/",
+        "name": "Alice",
+        "type": "Source",
+        "published": "2020-07-14T16:23:55.125Z",
+        "updated": "2020-07-14T16:23:55.125Z",
+        "shortId": "ePBawQ5aWWfiN6nyLprBmH-f2e212bc7d",
+        "author": [],
+        "editor": [],
+        "contributor": [],
+        "creator": [],
+        "illustrator": [],
+        "publisher": [],
+        "translator": [],
+        "copyrightHolder": []
+      },
+      "type": "Note",
+      "shortId": "ePBawQ5aWWfiN6nyLprBmH-9fe723b3cf"
+    },
+    {
+      "id": "http://example.com/annotations1",
+      "type": "Annotation",
+      "motivation": "bookmarking",
+      "creator": {
+        "id": "http://example.org/user1",
+        "type": "Person",
+        "name": "A. Person",
+        "nickname": "user1"
+      },
+      "created": "2015-10-13T13:00:00Z",
+      "stylesheet": {
+        "id": "http://example.org/stylesheet1",
+        "type": "CssStylesheet"
+      },
+      "target": {
+        "source": "https://example.com/tests/fixtures/test-that-unmatched-sources-are-not-processed",
+        "selector": {
+          "type": "CssSelector",
+          "value": "h3:first-of-type"
+        }
+      }
+    }
+  ]
+}

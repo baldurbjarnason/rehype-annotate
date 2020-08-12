@@ -78,7 +78,8 @@ module.exports = function processPositions(
     });
     if (replacement) {
       replacementActions.push(() => {
-        parent.children.splice(index, 1, ...replacement);
+        const newIndex = parent.children.indexOf(node);
+        parent.children.splice(newIndex, 1, ...replacement);
       });
     }
     if (endInNode) {
