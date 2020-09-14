@@ -1,4 +1,4 @@
-const visit = require("unist-util-visit");
+const visit = require("unist-util-visit-parents");
 const addPropsToNode = require("./add-props-to-node");
 const h = require("hastscript");
 // const debug = require("../logger")("process-positions");
@@ -40,7 +40,7 @@ module.exports = function processPositions(
   const replacementActions = [];
   visit(tree, "text", visitor);
   replacementActions.forEach(fn => fn());
-  function visitor(node, index, parent) {
+  function visitor(node, ancestors) {
     if (!annotation) return;
     // What should we do if the node selector has a highlighting purpose?
     // -> The sensible solution is that highlights with a node selector are rendered differently (e.g. border or background behind entire node)
@@ -51,20 +51,13 @@ module.exports = function processPositions(
       count,
       currentAnnotation: annotation,
       node,
-      parent,
-      index,
+      ancestors,
       stimulus
     });
     count = count + node.value.length;
   }
-  function visitNode({
-    count,
-    currentAnnotation,
-    node,
-    parent,
-    index,
-    stimulus
-  }) {
+  function visitNode({ count, currentAnnotation, node, ancestors, stimulus }) {
+    const parent = ancestors[ancestors.length - 1];
     const { end } = currentAnnotation.target.selector;
     const startInNode = startIsInNode(count, currentAnnotation, node);
     const endInNode = endIsInNode(count, currentAnnotation, node);
@@ -73,6 +66,7 @@ module.exports = function processPositions(
       endInNode,
       count,
       node,
+      svg: ancestors.find(node => node.tagName === "svg"),
       currentAnnotation,
       stimulus
     });
@@ -89,8 +83,7 @@ module.exports = function processPositions(
           count: end,
           currentAnnotation: annotation,
           node: suffix,
-          parent,
-          index: parent.children.indexOf(suffix),
+          ancestors,
           stimulus
         });
       }
@@ -98,10 +91,10 @@ module.exports = function processPositions(
   }
 };
 
-function wrapNode(text, annotation, stimulus) {
+function wrapNode(text, annotation, svg, stimulus) {
   // If we decide to support linking purposes by rendering actual links then we need to change this and make sure we don't render nested links.
   // It's actually simpler in the meantime to support linking purposes by rendering a link button either after highlight or in sidebar.
-  const node = h("mark", text);
+  const node = h(svg ? "tspan" : "mark", text);
   addPropsToNode(node, annotation, { stimulus });
   return node;
 }
@@ -136,7 +129,8 @@ function processNode({
   count,
   node,
   currentAnnotation,
-  stimulus
+  stimulus,
+  svg
 }) {
   const { start, end } = currentAnnotation.target.selector;
   let replacement;
@@ -150,6 +144,7 @@ function processNode({
       const wrappedNode = wrapNode(
         node.value.slice(firstSplit, secondSplit),
         currentAnnotation,
+        svg,
         stimulus
       );
       const suffixValue = node.value.slice(secondSplit);
@@ -165,6 +160,7 @@ function processNode({
       const wrappedNode = wrapNode(
         node.value.slice(firstSplit),
         currentAnnotation,
+        svg,
         stimulus
       );
       replacement = [prefix, wrappedNode];
@@ -175,6 +171,7 @@ function processNode({
     const wrappedNode = wrapNode(
       node.value.slice(0, secondSplit),
       currentAnnotation,
+      svg,
       stimulus
     );
     suffix = { type: "text", value: node.value.slice(secondSplit) };
@@ -186,7 +183,7 @@ function processNode({
     node.value.trim()
   ) {
     // debug("whitespace: ", !node.value.trim());
-    replacement = [wrapNode(node.value, currentAnnotation, stimulus)];
+    replacement = [wrapNode(node.value, currentAnnotation, svg, stimulus)];
   }
   return { replacement, suffix };
 }

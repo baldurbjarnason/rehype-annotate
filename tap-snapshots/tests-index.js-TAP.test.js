@@ -4,8 +4,10 @@
  * Re-generate by setting TAP_SNAPSHOT=1 and running tests.
  * Make sure to inspect the output below.  Do not ignore changes!
  */
-'use strict'
-exports[`tests/index.js TAP rehype-annotate basic fixtures/css-single.input.html > fixtures/css-single.input.html annotations 1`] = `
+"use strict";
+exports[
+  `tests/index.js TAP rehype-annotate basic fixtures/css-single.input.html > fixtures/css-single.input.html annotations 1`
+] = `
 Array [
   Object {
     "created": "2015-10-13T13:00:00Z",
@@ -31,9 +33,11 @@ Array [
     "type": "Annotation",
   },
 ]
-`
+`;
 
-exports[`tests/index.js TAP rehype-annotate basic fixtures/fragment-multibody.input.html > fixtures/fragment-multibody.input.html annotations 1`] = `
+exports[
+  `tests/index.js TAP rehype-annotate basic fixtures/fragment-multibody.input.html > fixtures/fragment-multibody.input.html annotations 1`
+] = `
 Array [
   Object {
     "body": Array [
@@ -74,9 +78,11 @@ Array [
     "type": "Annotation",
   },
 ]
-`
+`;
 
-exports[`tests/index.js TAP rehype-annotate basic fixtures/poetry-linebreaks.input.html > fixtures/poetry-linebreaks.input.html annotations 1`] = `
+exports[
+  `tests/index.js TAP rehype-annotate basic fixtures/poetry-linebreaks.input.html > fixtures/poetry-linebreaks.input.html annotations 1`
+] = `
 Array [
   Object {
     "body": Array [
@@ -119,9 +125,11 @@ Array [
     "updated": "2020-08-12T11:11:32.527Z",
   },
 ]
-`
+`;
 
-exports[`tests/index.js TAP rehype-annotate basic fixtures/range.input.html > fixtures/range.input.html annotations 1`] = `
+exports[
+  `tests/index.js TAP rehype-annotate basic fixtures/range.input.html > fixtures/range.input.html annotations 1`
+] = `
 Array [
   Object {
     "created": "2015-10-13T13:00:00Z",
@@ -154,9 +162,11 @@ Array [
     "type": "Annotation",
   },
 ]
-`
+`;
 
-exports[`tests/index.js TAP rehype-annotate basic fixtures/refinedby.input.html > fixtures/refinedby.input.html annotations 1`] = `
+exports[
+  `tests/index.js TAP rehype-annotate basic fixtures/refinedby.input.html > fixtures/refinedby.input.html annotations 1`
+] = `
 Array [
   Object {
     "body": Array [
@@ -241,9 +251,11 @@ Array [
     "type": "Annotation",
   },
 ]
-`
+`;
 
-exports[`tests/index.js TAP rehype-annotate basic fixtures/text-position.input.html > fixtures/text-position.input.html annotations 1`] = `
+exports[
+  `tests/index.js TAP rehype-annotate basic fixtures/text-position.input.html > fixtures/text-position.input.html annotations 1`
+] = `
 Array [
   Object {
     "body": Array [
@@ -342,9 +354,11 @@ Array [
     "type": "Annotation",
   },
 ]
-`
+`;
 
-exports[`tests/index.js TAP rehype-annotate basic fixtures/text-quote.input.html > fixtures/text-quote.input.html annotations 1`] = `
+exports[
+  `tests/index.js TAP rehype-annotate basic fixtures/text-quote.input.html > fixtures/text-quote.input.html annotations 1`
+] = `
 Array [
   Object {
     "body": Array [
@@ -490,9 +504,11 @@ Array [
     "type": "Annotation",
   },
 ]
-`
+`;
 
-exports[`tests/index.js TAP rehype-annotate basic fixtures/xpath-single.input.html > fixtures/xpath-single.input.html annotations 1`] = `
+exports[
+  `tests/index.js TAP rehype-annotate basic fixtures/xpath-single.input.html > fixtures/xpath-single.input.html annotations 1`
+] = `
 Array [
   Object {
     "created": "2015-10-13T13:00:00Z",
@@ -519,4 +535,4 @@ Array [
     "type": "Annotation",
   },
 ]
-`
+`;
