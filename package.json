@@ -47,7 +47,7 @@
   "devDependencies": {
     "healthier": "3.2.0",
     "prettier": "1.19.1",
-    "tap": "^14.10.7",
+    "tap": "^14.10.8",
     "typescript": "^3.7.2"
   },
   "private": true
