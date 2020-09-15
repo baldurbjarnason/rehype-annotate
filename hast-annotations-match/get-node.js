@@ -6,19 +6,12 @@ const processQuotations = require("./process-quotations");
 const selectors = {
   XPathSelector: simpleXpathSelector,
   CssSelector: nodeSelector,
-  FragmentSelector: ({
-    tree,
-    value,
-    annotation,
-    addProps = true,
-    stimulus
-  }) => {
+  FragmentSelector: ({ tree, value, annotation, addProps = true }) => {
     return nodeSelector({
       tree,
       value: "#" + value,
       annotation,
-      addProps,
-      stimulus
+      addProps
     });
   }
 };
@@ -27,23 +20,22 @@ module.exports = getNode;
 
 /**
  *
- * @param {{tree: Object, selector: Object, annotation: Object, stimulus: boolean}} param0 - selector options
+ * @param {{tree: Object, selector: Object, annotation: Object}} param0 - selector options
  */
-function getNode({ tree, selector, annotation, stimulus }) {
+function getNode({ tree, selector, annotation }) {
   // Need to check `refinedBy`. If so and refining selector is quote or text-position then process using node as root tree
   if (selector.refinedBy) {
     const node = selectors[selector.type]({
       tree,
       value: selector.value,
       annotation,
-      addProps: false,
-      stimulus
+      addProps: false
     });
     const target = { ...annotation.target, selector: selector.refinedBy };
     if (selector.refinedBy.type === "TextQuoteSelector") {
-      processQuotations(node, [{ ...annotation, target }], { stimulus });
+      processQuotations(node, [{ ...annotation, target }]);
     } else if (selector.refinedBy.type === "TextPositionSelector") {
-      processPositions(node, [{ ...annotation, target }], { stimulus });
+      processPositions(node, [{ ...annotation, target }]);
     } else {
       return selectors[selector.refinedBy.type]({
         tree: node,
@@ -51,16 +43,14 @@ function getNode({ tree, selector, annotation, stimulus }) {
         annotation: {
           ...annotation,
           target
-        },
-        stimulus
+        }
       });
     }
   } else {
     return selectors[selector.type]({
       tree,
       value: selector.value,
-      annotation,
-      stimulus
+      annotation
     });
   }
 }

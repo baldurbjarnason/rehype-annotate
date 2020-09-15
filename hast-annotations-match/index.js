@@ -3,8 +3,7 @@ const rangeSelector = require("./range-selector");
 const getNode = require("./get-node");
 const processPositions = require("./process-positions");
 const processQuotations = require("./process-quotations");
-const { selectAll, select } = require("hast-util-select");
-const renderTemplates = require("./render-templates");
+const { selectAll } = require("hast-util-select");
 
 module.exports = matchAnnotations;
 
@@ -38,11 +37,7 @@ For each selector:
 
 */
 
-function matchAnnotations(
-  tree,
-  file,
-  { annotations, url, canonical, stimulus }
-) {
+function matchAnnotations(tree, file, { annotations, url, canonical, notes }) {
   // iterate through annotations
   let positionAnnotations = [];
   let quoteAnnotations = [];
@@ -61,16 +56,16 @@ function matchAnnotations(
           break;
         case "RangeSelector":
           // debug("using RangeSelector");
-          rangeSelector({ tree, selector, annotation, stimulus });
+          rangeSelector({ tree, selector, annotation });
           break;
         default:
-          getNode({ tree, selector, annotation, stimulus });
+          getNode({ tree, selector, annotation });
           break;
       }
     }
   }
-  processPositions(tree, positionAnnotations, { stimulus });
-  processQuotations(tree, quoteAnnotations, { stimulus });
+  processPositions(tree, positionAnnotations);
+  processQuotations(tree, quoteAnnotations);
   const sortedAnnotationsId = selectAll("[data-annotation-id]", tree).map(
     node => node.properties.dataAnnotationId
   );
@@ -78,12 +73,6 @@ function matchAnnotations(
     annotations.find(annotation => annotation.id === id)
   );
   file.data.annotations = sortedAnnotations;
-  if (stimulus && annotations.length !== 0) {
-    const body = select("body", tree);
-    body.properties.dataController = ["annotations"];
-    const templates = renderTemplates(file.data.annotations);
-    body.children = templates.concat(body.children);
-  }
   function testSource(source) {
     return source === url || source === canonical;
   }

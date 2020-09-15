@@ -5,12 +5,12 @@ module.exports = nodeSelector;
 
 /**
  *
- * @param {{tree: Object, value: string, annotation: Object, addProps: undefined | boolean, stimulus: boolean}} param0 - selector options
+ * @param {{tree: Object, value: string, annotation: Object, addProps: undefined | boolean}} param0 - selector options
  */
-function nodeSelector({ tree, value, annotation, addProps = true, stimulus }) {
+function nodeSelector({ tree, value, annotation, addProps = true }) {
   const node = select(value, tree);
   if (node && addProps) {
-    addPropsToNode(node, annotation, { stimulus });
+    addPropsToNode(node, annotation);
   }
   return node;
 }

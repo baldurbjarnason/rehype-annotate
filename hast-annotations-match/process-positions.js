@@ -23,11 +23,7 @@ For each selector:
 5. Add link to annotations collection id in head
 */
 
-module.exports = function processPositions(
-  tree,
-  positionAnnotations,
-  { stimulus }
-) {
+module.exports = function processPositions(tree, positionAnnotations) {
   // Sort annotations based on selector.start
   positionAnnotations.sort(
     (a, b) => a.target.selector.start - b.target.selector.start
@@ -45,12 +41,11 @@ module.exports = function processPositions(
       count,
       currentAnnotation: annotation,
       node,
-      ancestors,
-      stimulus
+      ancestors
     });
     count = count + node.value.length;
   }
-  function visitNode({ count, currentAnnotation, node, ancestors, stimulus }) {
+  function visitNode({ count, currentAnnotation, node, ancestors }) {
     const parent = ancestors[ancestors.length - 1];
     const { end } = currentAnnotation.target.selector;
     const startInNode = startIsInNode(count, currentAnnotation, node);
@@ -61,8 +56,7 @@ module.exports = function processPositions(
       count,
       node,
       svg: ancestors.find(node => node.tagName === "svg"),
-      currentAnnotation,
-      stimulus
+      currentAnnotation
     });
     if (replacement) {
       replacementActions.push(() => {
@@ -77,19 +71,18 @@ module.exports = function processPositions(
           count: end,
           currentAnnotation: annotation,
           node: suffix,
-          ancestors,
-          stimulus
+          ancestors
         });
       }
     }
   }
 };
 
-function wrapNode(text, annotation, svg, stimulus) {
+function wrapNode(text, annotation, svg) {
   // If we decide to support linking purposes by rendering actual links then we need to change this and make sure we don't render nested links.
   // It's actually simpler in the meantime to support linking purposes by rendering a link button either after highlight or in sidebar.
   const node = h(svg ? "tspan" : "mark", text);
-  addPropsToNode(node, annotation, { stimulus });
+  addPropsToNode(node, annotation);
   return node;
 }
 function getAnnotation(positionAnnotations) {
@@ -123,7 +116,6 @@ function processNode({
   count,
   node,
   currentAnnotation,
-  stimulus,
   svg
 }) {
   const { start, end } = currentAnnotation.target.selector;
@@ -138,8 +130,7 @@ function processNode({
       const wrappedNode = wrapNode(
         node.value.slice(firstSplit, secondSplit),
         currentAnnotation,
-        svg,
-        stimulus
+        svg
       );
       const suffixValue = node.value.slice(secondSplit);
       suffix = { type: "text", value: suffixValue };
@@ -154,8 +145,7 @@ function processNode({
       const wrappedNode = wrapNode(
         node.value.slice(firstSplit),
         currentAnnotation,
-        svg,
-        stimulus
+        svg
       );
       replacement = [prefix, wrappedNode];
     }
@@ -165,8 +155,7 @@ function processNode({
     const wrappedNode = wrapNode(
       node.value.slice(0, secondSplit),
       currentAnnotation,
-      svg,
-      stimulus
+      svg
     );
     suffix = { type: "text", value: node.value.slice(secondSplit) };
     replacement = [wrappedNode, suffix];
@@ -177,7 +166,7 @@ function processNode({
     node.value.trim()
   ) {
     // debug("whitespace: ", !node.value.trim());
-    replacement = [wrapNode(node.value, currentAnnotation, svg, stimulus)];
+    replacement = [wrapNode(node.value, currentAnnotation, svg)];
   }
   return { replacement, suffix };
 }

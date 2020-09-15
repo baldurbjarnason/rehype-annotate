@@ -7,21 +7,19 @@ module.exports = rangeSelector;
 
 /**
  *
- * @param {{tree: Object, selector: Object, annotation: Object, stimulus: boolean}} param0 - selector options
+ * @param {{tree: Object, selector: Object, annotation: Object}} param0 - selector options
  */
-function rangeSelector({ tree, selector, annotation, stimulus }) {
+function rangeSelector({ tree, selector, annotation }) {
   const { startSelector, endSelector } = selector;
   const startNode = getNode({
     tree,
     selector: startSelector,
-    annotation,
-    stimulus
+    annotation
   });
   const endNode = getNode({
     tree,
     selector: endSelector,
-    annotation,
-    stimulus
+    annotation
   });
   let controlStart = false;
   let controlEnd = false;
@@ -40,6 +38,6 @@ function rangeSelector({ tree, selector, annotation, stimulus }) {
   });
   selectedNodes = [...selectedNodes, endNode];
   selectedNodes.map(node => {
-    addPropsToNode(node, annotation, { stimulus });
+    addPropsToNode(node, annotation);
   });
 }

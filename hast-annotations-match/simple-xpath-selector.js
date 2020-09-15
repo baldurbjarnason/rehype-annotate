@@ -6,18 +6,12 @@ module.exports = simpleXpathSelector;
 
 /**
  *
- * @param {{tree: Object, value: string, annotation: Object, addProps: undefined | boolean, stimulus: boolean}} param0 - selector options
+ * @param {{tree: Object, value: string, annotation: Object, addProps: undefined | boolean}} param0 - selector options
  */
-function simpleXpathSelector({
-  tree,
-  value,
-  annotation,
-  addProps = true,
-  stimulus
-}) {
+function simpleXpathSelector({ tree, value, annotation, addProps = true }) {
   const node = fallbackResolve(value, tree);
   if (node && addProps) {
-    addPropsToNode(node, annotation, { stimulus });
+    addPropsToNode(node, annotation);
   }
   return node;
 }
