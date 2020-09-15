@@ -25,11 +25,10 @@ For each selector:
 
 module.exports = function processPositions(
   tree,
-  file,
   positionAnnotations,
   { stimulus }
 ) {
-  // Sort annotations based on selector.start, merge overlapping annotations
+  // Sort annotations based on selector.start
   positionAnnotations.sort(
     (a, b) => a.target.selector.start - b.target.selector.start
   );
@@ -42,11 +41,6 @@ module.exports = function processPositions(
   replacementActions.forEach(fn => fn());
   function visitor(node, ancestors) {
     if (!annotation) return;
-    // What should we do if the node selector has a highlighting purpose?
-    // -> The sensible solution is that highlights with a node selector are rendered differently (e.g. border or background behind entire node)
-    // That way we have fewer nestd marks to worry about.
-    // const { start, end } = annotation.target.selector;
-    // debug("visitor start: ", count, start, end, count + node.value.length);
     visitNode({
       count,
       currentAnnotation: annotation,

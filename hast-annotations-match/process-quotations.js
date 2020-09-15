@@ -10,7 +10,6 @@ const toString = require("hast-util-to-string");
 
 module.exports = function processQuotations(
   tree,
-  file,
   quoteAnnotations,
   { stimulus }
 ) {
@@ -19,7 +18,7 @@ module.exports = function processQuotations(
     return processor(tree, annotation);
   }
   positionAnnotations = positionAnnotations.filter(item => item);
-  processPositions(tree, file, positionAnnotations, { stimulus });
+  processPositions(tree, positionAnnotations, { stimulus });
 };
 
 function processor(tree, annotation, options = {}) {

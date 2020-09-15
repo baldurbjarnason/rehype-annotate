@@ -41,9 +41,9 @@ function getNode({ tree, selector, annotation, stimulus }) {
     });
     const target = { ...annotation.target, selector: selector.refinedBy };
     if (selector.refinedBy.type === "TextQuoteSelector") {
-      processQuotations(node, null, [{ ...annotation, target }], { stimulus });
+      processQuotations(node, [{ ...annotation, target }], { stimulus });
     } else if (selector.refinedBy.type === "TextPositionSelector") {
-      processPositions(node, null, [{ ...annotation, target }], { stimulus });
+      processPositions(node, [{ ...annotation, target }], { stimulus });
     } else {
       return selectors[selector.refinedBy.type]({
         tree: node,

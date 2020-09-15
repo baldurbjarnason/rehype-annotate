@@ -69,8 +69,8 @@ function matchAnnotations(
       }
     }
   }
-  processPositions(tree, file, positionAnnotations, { stimulus });
-  processQuotations(tree, file, quoteAnnotations, { stimulus });
+  processPositions(tree, positionAnnotations, { stimulus });
+  processQuotations(tree, quoteAnnotations, { stimulus });
   const sortedAnnotationsId = selectAll("[data-annotation-id]", tree).map(
     node => node.properties.dataAnnotationId
   );
