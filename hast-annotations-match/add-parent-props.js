@@ -30,7 +30,7 @@ for (const prop of props) {
   attributes[prop] = info.find(info.svg, prop).property;
 }
 
-module.exports = function addPropsToNode(svg, node, parent, annotation) {
+module.exports = function addPropsToNode(svg, node, parent) {
   if (!svg) return;
   const parentLength = toString(parent).length;
   const nodeLength = toString(node).length;
@@ -39,13 +39,13 @@ module.exports = function addPropsToNode(svg, node, parent, annotation) {
     parent.properties[attributes.textLength] ||
       parent.properties[attributes.width]
   );
-  const nodeWidth = String((nodeLength / parentLength) * width + 20);
-  const offsetWidth = (offset / parentLength) * width - 20;
+  const nodeWidth = String((nodeLength / parentLength) * width + 30);
+  const offsetWidth = (offset / parentLength) * width;
   const height = String(
-    Number.parseFloat(parent.properties[attributes["font-size"]]) + 20
+    Number.parseFloat(parent.properties[attributes["font-size"]]) + 30
   );
-  const x = Number.parseFloat(parent.properties[attributes.x] || 0) - 10;
-  const y = Number.parseFloat(parent.properties[attributes.y] || 0) - 10;
+  const x = Number.parseFloat(parent.properties[attributes.x] || 0) - 15;
+  const y = Number.parseFloat(parent.properties[attributes.y] || 0) - 15 - height;
   node.properties[attributes["data-annotation-x"]] = String(x + offsetWidth);
   node.properties[attributes["data-annotation-y"]] = String(y);
   node.properties[attributes["data-annotation-width"]] = nodeWidth;

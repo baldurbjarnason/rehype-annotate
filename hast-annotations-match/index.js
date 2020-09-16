@@ -116,7 +116,7 @@ function matchAnnotations(tree, file, { annotations, url, canonical, notes }) {
         return rect;
       }
     );
-    svg.children = svg.children.concat(svgHighlights);
+    svg.children = svgHighlights.concat(svg.children);
   });
   const sortedAnnotationsId = selectAll("[data-annotation-id]", tree).map(
     node => node.properties.dataAnnotationId
