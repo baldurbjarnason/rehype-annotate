@@ -1,6 +1,7 @@
 const visit = require("unist-util-visit-parents");
 const addPropsToNode = require("./add-props-to-node");
 const h = require("hastscript");
+const addParentProps = require("./add-parent-props");
 // const debug = require("../logger")("process-positions");
 
 /* 
@@ -47,6 +48,10 @@ module.exports = function processPositions(tree, positionAnnotations) {
   }
   function visitNode({ count, currentAnnotation, node, ancestors }) {
     const parent = ancestors[ancestors.length - 1];
+    let textElement = node;
+    if (node.tagName !== "text") {
+      textElement = ancestors.find(node => node.tagName === "text");
+    }
     const { end } = currentAnnotation.target.selector;
     const startInNode = startIsInNode(count, currentAnnotation, node);
     const endInNode = endIsInNode(count, currentAnnotation, node);
@@ -55,8 +60,9 @@ module.exports = function processPositions(tree, positionAnnotations) {
       endInNode,
       count,
       node,
-      svg: ancestors.find(node => node.tagName === "svg"),
-      currentAnnotation
+      svg: ancestors[ancestors.map(node => node.tagName).lastIndexOf("svg")],
+      currentAnnotation,
+      parent: textElement
     });
     if (replacement) {
       replacementActions.push(() => {
@@ -78,11 +84,12 @@ module.exports = function processPositions(tree, positionAnnotations) {
   }
 };
 
-function wrapNode(text, annotation, svg) {
+function wrapNode(text, annotation, svg, parent) {
   // If we decide to support linking purposes by rendering actual links then we need to change this and make sure we don't render nested links.
   // It's actually simpler in the meantime to support linking purposes by rendering a link button either after highlight or in sidebar.
   const node = h(svg ? "tspan" : "mark", text);
   addPropsToNode(node, annotation);
+  addParentProps(svg, node, parent, annotation);
   return node;
 }
 function getAnnotation(positionAnnotations) {
@@ -116,7 +123,8 @@ function processNode({
   count,
   node,
   currentAnnotation,
-  svg
+  svg,
+  parent
 }) {
   const { start, end } = currentAnnotation.target.selector;
   let replacement;
@@ -130,7 +138,8 @@ function processNode({
       const wrappedNode = wrapNode(
         node.value.slice(firstSplit, secondSplit),
         currentAnnotation,
-        svg
+        svg,
+        parent
       );
       const suffixValue = node.value.slice(secondSplit);
       suffix = { type: "text", value: suffixValue };
@@ -145,7 +154,8 @@ function processNode({
       const wrappedNode = wrapNode(
         node.value.slice(firstSplit),
         currentAnnotation,
-        svg
+        svg,
+        parent
       );
       replacement = [prefix, wrappedNode];
     }
@@ -155,7 +165,8 @@ function processNode({
     const wrappedNode = wrapNode(
       node.value.slice(0, secondSplit),
       currentAnnotation,
-      svg
+      svg,
+      parent
     );
     suffix = { type: "text", value: node.value.slice(secondSplit) };
     replacement = [wrappedNode, suffix];
@@ -166,7 +177,7 @@ function processNode({
     node.value.trim()
   ) {
     // debug("whitespace: ", !node.value.trim());
-    replacement = [wrapNode(node.value, currentAnnotation, svg)];
+    replacement = [wrapNode(node.value, currentAnnotation, svg, parent)];
   }
   return { replacement, suffix };
 }

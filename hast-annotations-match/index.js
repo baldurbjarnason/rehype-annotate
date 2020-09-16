@@ -4,6 +4,33 @@ const getNode = require("./get-node");
 const processPositions = require("./process-positions");
 const processQuotations = require("./process-quotations");
 const { selectAll } = require("hast-util-select");
+const info = require("property-information");
+const h = require("hastscript");
+// const visit = require("unist-util-visit-parents");
+const props = [
+  "x",
+  "y",
+  "width",
+  "height",
+  "textLength",
+  "font-size",
+  "data-annotation-id",
+  "data-annotation-x",
+  "data-annotation-y",
+  "data-annotation-width",
+  "data-annotation-height",
+  "data-annotation-offset",
+  "data-annotation-highlight",
+  "data-annotation-transform",
+  "data-annotation-highlight-box",
+  "transform",
+  "fill",
+  "class"
+];
+const attributes = {};
+for (const prop of props) {
+  attributes[prop] = info.find(info.svg, prop).property;
+}
 
 module.exports = matchAnnotations;
 
@@ -66,6 +93,31 @@ function matchAnnotations(tree, file, { annotations, url, canonical, notes }) {
   }
   processPositions(tree, positionAnnotations);
   processQuotations(tree, quoteAnnotations);
+  selectAll("svg", tree).forEach(svg => {
+    const svgHighlights = selectAll("tspan[data-annotation-id]", svg).map(
+      node => {
+        const rect = h("rect");
+        rect.properties[attributes["data-annotation-highlight-box"]] = true;
+        rect.properties[attributes.x] =
+          node.properties[attributes["data-annotation-x"]];
+        rect.properties[attributes.y] =
+          node.properties[attributes["data-annotation-y"]];
+        rect.properties[attributes.width] =
+          node.properties[attributes["data-annotation-width"]];
+        rect.properties[attributes.height] =
+          node.properties[attributes["data-annotation-height"]];
+        rect.properties[attributes.transform] =
+          node.properties[attributes["data-annotation-transform"]];
+        rect.properties[attributes.fill] = "rgba(255, 255, 0, 0.5)";
+        const classes = [];
+        node.properties[attributes.class] = classes.concat(
+          node.properties[attributes.class]
+        );
+        return rect;
+      }
+    );
+    svg.children = svg.children.concat(svgHighlights);
+  });
   const sortedAnnotationsId = selectAll("[data-annotation-id]", tree).map(
     node => node.properties.dataAnnotationId
   );
@@ -78,3 +130,18 @@ function matchAnnotations(tree, file, { annotations, url, canonical, notes }) {
   }
   return tree;
 }
+
+// function addHighlights (node, ancestors) {
+//   if (node.tagName === "tspan" && node.properties[attributes["data-annotation-id"]]) {
+//     const rect = h("rect[data-annotation-highlight-box]")
+//     rect.properties[attributes.x] = node.properties[attributes["data-annotation-x"]];
+//     rect.properties[attributes.y] = node.properties[attributes["data-annotation-y"]];
+//     rect.properties[attributes.width] = node.properties[attributes["data-annotation-width"]];
+//     rect.properties[attributes.height] = node.properties[attributes["data-annotation-height"]];
+//     rect.properties[attributes.transform] = node.properties[attributes["data-annotation-transform"]];
+//     rect.properties[attributes.fill] = "rgba(255, 255, 0, 0.5)"
+//     const classes = [];
+//     node.properties[attributes.class] = classes
+//       .concat(node.properties[attributes.class])
+//   }
+// }
