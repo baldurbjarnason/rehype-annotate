@@ -45,7 +45,7 @@ module.exports = function addPropsToNode(svg, node, parent) {
     Number.parseFloat(parent.properties[attributes["font-size"]]) + 30
   );
   const x = Number.parseFloat(parent.properties[attributes.x] || 0) - 15;
-  const y = Number.parseFloat(parent.properties[attributes.y] || 0) - 15 - height;
+  const y = Number.parseFloat(parent.properties[attributes.y] || 0) - 15 - (Number.parseFloat(height) * 0.5);
   node.properties[attributes["data-annotation-x"]] = String(x + offsetWidth);
   node.properties[attributes["data-annotation-y"]] = String(y);
   node.properties[attributes["data-annotation-width"]] = nodeWidth;

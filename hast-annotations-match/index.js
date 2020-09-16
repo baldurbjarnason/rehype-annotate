@@ -23,6 +23,7 @@ const props = [
   "data-annotation-highlight",
   "data-annotation-transform",
   "data-annotation-highlight-box",
+  "pointer-events",
   "transform",
   "fill",
   "class"
@@ -108,15 +109,16 @@ function matchAnnotations(tree, file, { annotations, url, canonical, notes }) {
           node.properties[attributes["data-annotation-height"]];
         rect.properties[attributes.transform] =
           node.properties[attributes["data-annotation-transform"]];
-        rect.properties[attributes.fill] = "rgba(255, 255, 0, 0.5)";
+        rect.properties[attributes.fill] = "rgba(255, 255, 0, 0.35)";
         const classes = [];
         node.properties[attributes.class] = classes.concat(
           node.properties[attributes.class]
         );
+        rect.properties[attributes["pointer-events"]] = "none";
         return rect;
       }
     );
-    svg.children = svgHighlights.concat(svg.children);
+    svg.children = svg.children.concat(svgHighlights);
   });
   const sortedAnnotationsId = selectAll("[data-annotation-id]", tree).map(
     node => node.properties.dataAnnotationId
