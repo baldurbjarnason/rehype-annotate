@@ -89,7 +89,7 @@ function wrapNode(text, annotation, svg, parent) {
   // It's actually simpler in the meantime to support linking purposes by rendering a link button either after highlight or in sidebar.
   const node = h(svg ? "tspan" : "mark", text);
   addPropsToNode(node, annotation);
-  addParentProps(svg, node, parent, annotation);
+  addParentProps(svg, node, parent);
   return node;
 }
 function getAnnotation(positionAnnotations) {

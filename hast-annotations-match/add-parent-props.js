@@ -1,6 +1,6 @@
 const info = require("property-information");
 const toString = require("hast-util-to-string");
-const pixelWidth = require('string-pixel-width')
+const pixelWidth = require("string-pixel-width");
 
 /* 
 ## Props
@@ -33,9 +33,17 @@ for (const prop of props) {
 
 module.exports = function addPropsToNode(svg, node, parent) {
   if (!svg) return;
-  const fontSize = Number.parseFloat(parent.properties[attributes["font-size"]])
-  const parentPixelWidth = pixelWidth(toString(parent), {size: fontSize, font: "helvetica"})
-  const nodePixelWidth = pixelWidth(toString(node), {size: fontSize, font: "helvetica"})
+  const fontSize = Number.parseFloat(
+    parent.properties[attributes["font-size"]]
+  );
+  const parentPixelWidth = pixelWidth(toString(parent), {
+    size: fontSize,
+    font: "helvetica"
+  });
+  const nodePixelWidth = pixelWidth(toString(node), {
+    size: fontSize,
+    font: "helvetica"
+  });
   // const offset = parentLength - nodeLength;
   const width = Number.parseFloat(
     parent.properties[attributes.textLength] ||
@@ -45,8 +53,11 @@ module.exports = function addPropsToNode(svg, node, parent) {
   const offsetWidth = width - nodeWidth;
   const height = fontSize + 40;
   const x = Number.parseFloat(parent.properties[attributes.x] || 0);
-  const y = Number.parseFloat(parent.properties[attributes.y] || 0) - 20 - fontSize;
-  node.properties[attributes["data-annotation-x"]] = String(x + offsetWidth - 20);
+  const y =
+    Number.parseFloat(parent.properties[attributes.y] || 0) - 20 - fontSize;
+  node.properties[attributes["data-annotation-x"]] = String(
+    x + offsetWidth - 20
+  );
   node.properties[attributes["data-annotation-y"]] = String(y);
   node.properties[attributes["data-annotation-width"]] = String(nodeWidth + 40);
   node.properties[attributes["data-annotation-height"]] = String(height);
