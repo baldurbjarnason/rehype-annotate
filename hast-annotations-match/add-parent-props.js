@@ -1,5 +1,6 @@
 const info = require("property-information");
 const toString = require("hast-util-to-string");
+const pixelWidth = require('string-pixel-width')
 
 /* 
 ## Props
@@ -32,24 +33,23 @@ for (const prop of props) {
 
 module.exports = function addPropsToNode(svg, node, parent) {
   if (!svg) return;
-  const parentLength = toString(parent).length;
-  const nodeLength = toString(node).length;
+  const fontSize = Number.parseFloat(parent.properties[attributes["font-size"]])
+  const parentPixelWidth = pixelWidth(toString(parent), {size: fontSize, font: "helvetica"})
+  const nodePixelWidth = pixelWidth(toString(node), {size: fontSize, font: "helvetica"})
   // const offset = parentLength - nodeLength;
   const width = Number.parseFloat(
     parent.properties[attributes.textLength] ||
       parent.properties[attributes.width]
   );
-  const nodeWidth = (nodeLength / parentLength) * width + 30;
+  const nodeWidth = (nodePixelWidth / parentPixelWidth) * width;
   const offsetWidth = width - nodeWidth;
-  const height = String(
-    Number.parseFloat(parent.properties[attributes["font-size"]]) + 30
-  );
-  const x = Number.parseFloat(parent.properties[attributes.x] || 0) - 15;
-  const y = Number.parseFloat(parent.properties[attributes.y] || 0) - 15 - (Number.parseFloat(height) * 0.5);
-  node.properties[attributes["data-annotation-x"]] = String(x + offsetWidth);
+  const height = fontSize + 40;
+  const x = Number.parseFloat(parent.properties[attributes.x] || 0);
+  const y = Number.parseFloat(parent.properties[attributes.y] || 0) - 20 - (height * 0.5);
+  node.properties[attributes["data-annotation-x"]] = String(x + offsetWidth - 20);
   node.properties[attributes["data-annotation-y"]] = String(y);
-  node.properties[attributes["data-annotation-width"]] = nodeWidth;
-  node.properties[attributes["data-annotation-height"]] = height;
+  node.properties[attributes["data-annotation-width"]] = String(nodeWidth + 40);
+  node.properties[attributes["data-annotation-height"]] = String(height);
   node.properties[attributes["data-annotation-transform"]] =
     node.properties[attributes.transform];
 };
