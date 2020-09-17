@@ -34,13 +34,13 @@ module.exports = function addPropsToNode(svg, node, parent) {
   if (!svg) return;
   const parentLength = toString(parent).length;
   const nodeLength = toString(node).length;
-  const offset = parentLength - nodeLength;
+  // const offset = parentLength - nodeLength;
   const width = Number.parseFloat(
     parent.properties[attributes.textLength] ||
       parent.properties[attributes.width]
   );
-  const nodeWidth = String((nodeLength / parentLength) * width + 30);
-  const offsetWidth = (offset / parentLength) * width;
+  const nodeWidth = (nodeLength / parentLength) * width + 30;
+  const offsetWidth = width - nodeWidth;
   const height = String(
     Number.parseFloat(parent.properties[attributes["font-size"]]) + 30
   );
