@@ -44,6 +44,7 @@
     "unist-util-is": "^4.0.1",
     "unist-util-visit": "^2.0.1",
     "unist-util-visit-parents": "^3.1.0",
+    "universal-base64url": "^1.1.0",
     "vfile-reporter": "^6.0.0"
   },
   "devDependencies": {

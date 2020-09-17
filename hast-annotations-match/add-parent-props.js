@@ -34,7 +34,7 @@ for (const prop of props) {
 module.exports = function addPropsToNode(svg, node, parent) {
   if (!svg) return;
   const fontSize = Number.parseFloat(
-    parent.properties[attributes["font-size"]]
+    parent.properties[attributes["font-size"]] || 16
   );
   const parentPixelWidth = pixelWidth(toString(parent), {
     size: fontSize,
@@ -46,8 +46,7 @@ module.exports = function addPropsToNode(svg, node, parent) {
   });
   // const offset = parentLength - nodeLength;
   const width = Number.parseFloat(
-    parent.properties[attributes.textLength] ||
-      parent.properties[attributes.width]
+    parent.properties[attributes.textLength] || parentPixelWidth
   );
   const nodeWidth = (nodePixelWidth / parentPixelWidth) * width;
   const offsetWidth = width - nodeWidth;

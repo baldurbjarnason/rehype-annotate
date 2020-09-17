@@ -2,6 +2,11 @@ const visit = require("unist-util-visit-parents");
 const addPropsToNode = require("./add-props-to-node");
 const h = require("hastscript");
 const addParentProps = require("./add-parent-props");
+const encode = require("universal-base64url").encode;
+
+function getId(id) {
+  return `id-${encode(id)}`;
+}
 // const debug = require("../logger")("process-positions");
 
 /* 
@@ -48,10 +53,7 @@ module.exports = function processPositions(tree, positionAnnotations) {
   }
   function visitNode({ count, currentAnnotation, node, ancestors }) {
     const parent = ancestors[ancestors.length - 1];
-    let textElement = node;
-    if (node.tagName !== "text") {
-      textElement = ancestors.find(node => node.tagName === "text");
-    }
+    const textElement = ancestors.find(node => node.tagName === "text");
     const { end } = currentAnnotation.target.selector;
     const startInNode = startIsInNode(count, currentAnnotation, node);
     const endInNode = endIsInNode(count, currentAnnotation, node);
@@ -143,6 +145,7 @@ function processNode({
       );
       const suffixValue = node.value.slice(secondSplit);
       suffix = { type: "text", value: suffixValue };
+      wrappedNode.properties.id = getId(currentAnnotation.id);
       replacement = [prefix, wrappedNode, suffix];
     }
     // else if (start) split at start, wrap the rest
@@ -157,6 +160,7 @@ function processNode({
         svg,
         parent
       );
+      wrappedNode.properties.id = getId(currentAnnotation.id);
       replacement = [prefix, wrappedNode];
     }
     // else if (end) split at end, wrap beginning
