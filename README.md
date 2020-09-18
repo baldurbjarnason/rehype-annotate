@@ -4,7 +4,7 @@ This [`rehype`](https://github.com/rehypejs/rehype) plugin matches [W3C-style an
 
 Note: this modifies the original tree and in some cases can add class attributes. Make sure to sanitise the tree afterwards.
 
-The script _does not_ embed annotation-provided styles as there don't seem to be many tools in the `unified`/`rehype` ecosystem for sanitising user-provided CSS. If a tool like that appears (or if we decided to implement one), then we will reconsider embedding CSS.
+The script _does not_ embed annotation-provided styles, although that is on the roadmap. We do assign the values of the `styleClass` property to the annotated nodes so the client can provide their own stylesheet.
 
 ## License
 
@@ -48,9 +48,7 @@ const options = {
   // the base url for the original html
   url: "https://syndicated.example.com/annotated.html",
   // the canonical url for the html
-  canonical: "https://example.org/annotated.html",
-  // Enable or disable stimulusJS support
-  stimulus: true
+  canonical: "https://example.org/annotated.html"
 }
 
 process('path/to/example/htmlfile.html', options)
@@ -62,6 +60,8 @@ process('path/to/example/htmlfile.html', options)
 ```
 
 The above code will print whatever issues are found out to the console, followed by the processed HTML.
+
+The `file.data.annotations` property will contain the annotations that have been matched to the HTML, in the order that the appear in the HTML file itself.
 
 ## API
 
@@ -191,54 +191,6 @@ An array of annotations that conform to the [W3C Web Annotations Data Model](htt
 
 The annotation is only matched to the html source if the `annotation.target.source` property matches either `canonical` or `url`.
 
-##### `options.stimulus`
-
-[stimulus](https://stimulusjs.org) support.
-
-When true, `rehype-annotate` will add attributes and sanitised templates for annotation bodies to the HTML. This lets you write your own `stimulus` controllers to add custom annotation behaviours.
-
-Attributes added to `body`:
-* `data-controller="annotations"`
-
-Attributes added to a matched node:
-* `data-controller="annotation"`
-* `data-target="annotations.node"`
-* `data-annotation-type="node"`
-
-Attributes added to a `mark` element that's created to wrap a selected text range:
-* `data-controller="annotation"`
-* `data-target="annotations.mark"`
-* `data-annotation-type="mark"`
-
-For every `annotation.body` of the type `TextualBody` and whose `format` is `text/html`, the html of the body is parsed and sanitised and inserted as a template tag:
-
-```html
-<template 
-  data-template-id="http://example.com/annotations1" 
-  data-controller="template" 
-  data-template-purpose="commenting"
-  lang="fr"
-  data-target="annotations.template">
-    <p>j'adore !</p>
-</template>
-```
-
-The `data-template-id` attribute matches the `id` of the parent annotation. **Note:** *annotations can have multiple bodies*.
-
-`text/markdown` annotation bodies are rendered using `remark-parse`, `remark-rehyp`, and `rehype-raw` before being sanitised using `rehype-sanitize`. Both CommonMark and markdown footnotes are enabled. Passing options to `remark-parse` is not yet supported. `rehype-raw` lets you mix HTML into your markdown source, provided the elements you use are a included in the [default schema used by `rehype-sanitize`](https://github.com/syntax-tree/hast-util-sanitize/blob/master/lib/github.json)
-
-All formats other than `text/html` or `text/markdown` are rendered as escaped plain text content in the template tag.
-
-```html
-<template
-  data-template-id="http://example.com/annotations1" 
-  data-controller="template"
-  data-template-purpose="commenting"
-  lang="fr" 
-  data-target="annotations.template">&#x3C;p>j'adore !&#x3C;/p>
-</template>
-```
-
 ## Selector Support
 
 * `CssSelector`: limited to the selectors supported by [`hast-util-select`](https://github.com/syntax-tree/hast-util-select#support)
@@ -252,4 +204,4 @@ For performance reasons text quote and text position selectors that overlap each
 
 ### `refinedBy`
 
-You can use the `refinedBy` property on a selector that resolves to an element node (`CssSelector`, `XPathSelector`, `FragmentSelector`) to create a new scope or root for a `TextPositionSelector` or a `TextQuoteSelector`.
+You can use the `refinedBy` property on a selector that resolves to a single element node (`CssSelector`, `XPathSelector`, `FragmentSelector`) to create a new scope or root for a another selector, including the `TextPositionSelector` or the `TextQuoteSelector`.
