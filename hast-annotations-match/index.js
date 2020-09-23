@@ -98,7 +98,8 @@ function matchAnnotations(tree, file, { annotations, url, canonical, notes }) {
     const svgHighlights = selectAll("tspan[data-annotation-id]", svg).map(
       node => {
         const rect = h("rect");
-        rect.properties[attributes["data-annotation-highlight-box"]] = node.properties["data-annotation-id"];
+        rect.properties[attributes["data-annotation-highlight-box"]] =
+          node.properties[attributes["data-annotation-id"]];
         rect.properties[attributes.x] =
           node.properties[attributes["data-annotation-x"]];
         rect.properties[attributes.y] =
