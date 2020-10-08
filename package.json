@@ -7,7 +7,7 @@
     "lint": "tsc --checkJs --allowJs --noEmit --lib es2015 --moduleResolution node  index.js && healthier && prettier --write --plugin-search-dir=. '**/*.{js,json,css,yml,svelte}'",
     "pretest": "npm run lint",
     "prepublishOnly": "npm run lint",
-    "test": "tap tests/index.js",
+    "test": "tap tests/index.js --coverage-report=text --coverage-report=lcov ",
     "snapshots": "TAP_SNAPSHOT=1 npm run test"
   },
   "engines": {
