@@ -24,7 +24,7 @@ const props = [
   "data-template-purpose",
   "class",
   "lang",
-  "data-target"
+  "data-target",
 ];
 const attributes = {};
 for (const prop of props) {
@@ -44,7 +44,7 @@ module.exports = function renderTemplates(annotations) {
   // This line flattens the resulting map and filters out undefineds/nulls.
   return Array.prototype.concat
     .apply([], annotations.map(renderTemplate))
-    .filter(item => item);
+    .filter((item) => item);
 };
 
 function renderTemplate(annotation) {

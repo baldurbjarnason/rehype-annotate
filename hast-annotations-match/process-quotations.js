@@ -1,4 +1,6 @@
-const processPositions = require("./process-positions");
+import { processPositions } from "./process-positions.js";
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
 
 // Based on https://github.com/tilgovi/dom-anchor-text-quote/blob/master/src/index.js MIT Licensed
 
@@ -8,14 +10,14 @@ const SLICE_LENGTH = 32;
 const SLICE_RE = new RegExp("(.|[\r\n]){1," + String(SLICE_LENGTH) + "}", "g");
 const toString = require("hast-util-to-string");
 
-module.exports = function processQuotations(tree, quoteAnnotations) {
+export function processQuotations(tree, quoteAnnotations) {
   let positionAnnotations = quoteAnnotations.map(processQuote);
   function processQuote(annotation, index) {
     return processor(tree, annotation);
   }
-  positionAnnotations = positionAnnotations.filter(item => item);
+  positionAnnotations = positionAnnotations.filter((item) => item);
   processPositions(tree, positionAnnotations);
-};
+}
 
 function processor(tree, annotation, options = {}) {
   const { selector } = annotation.target;
@@ -98,8 +100,8 @@ function processor(tree, annotation, options = {}) {
     selector: {
       type: "TextPositionSelector",
       start: acc.start,
-      end: acc.end
-    }
+      end: acc.end,
+    },
   };
   return { ...annotation, target };
 }

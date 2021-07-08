@@ -1,10 +1,10 @@
-const matchAnnotations = require("./hast-annotations-match");
+import { matchAnnotations } from "./hast-annotations-match/index.js";
 
-function attacher(options) {
+export function attacher(options) {
   return transformer;
   function transformer(node, file) {
     return matchAnnotations(node, file, options);
   }
 }
 
-module.exports = attacher;
+export default attacher;

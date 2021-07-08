@@ -1,12 +1,16 @@
 // const debug = require("../logger")("hast-annotations-match");
-const rangeSelector = require("./range-selector");
-const getNode = require("./get-node");
-const processPositions = require("./process-positions");
-const processQuotations = require("./process-quotations");
-const { selectAll } = require("hast-util-select");
-const info = require("property-information");
-const h = require("hastscript");
-// const visit = require("unist-util-visit-parents");
+import { rangeSelector } from "./range-selector.js";
+import { getNode } from "./get-node.js";
+import { processPositions } from "./process-positions.js";
+import { processQuotations } from "./process-quotations.js";
+import { selectAll } from "hast-util-select";
+import { find, svg } from "property-information";
+import { h } from "hastscript";
+
+function debug(...args) {
+  // console.log(...args);
+}
+
 const props = [
   "x",
   "y",
@@ -26,14 +30,12 @@ const props = [
   "pointer-events",
   "transform",
   "fill",
-  "class"
+  "class",
 ];
 const attributes = {};
 for (const prop of props) {
-  attributes[prop] = info.find(info.svg, prop).property;
+  attributes[prop] = find(svg, prop).property;
 }
-
-module.exports = matchAnnotations;
 
 /* 
 ## `hast-annotations-match`
@@ -65,7 +67,11 @@ For each selector:
 
 */
 
-function matchAnnotations(tree, file, { annotations, url, canonical, notes }) {
+export function matchAnnotations(
+  tree,
+  file,
+  { annotations, url, canonical, notes }
+) {
   // iterate through annotations
   let positionAnnotations = [];
   let quoteAnnotations = [];
@@ -75,15 +81,15 @@ function matchAnnotations(tree, file, { annotations, url, canonical, notes }) {
       const { selector } = target;
       switch (selector.type) {
         case "TextQuoteSelector":
-          // debug("using TextQuoteSelector");
+          debug("using TextQuoteSelector");
           quoteAnnotations = quoteAnnotations.concat(annotation);
           break;
         case "TextPositionSelector":
-          // debug("using TextPositionSelector");
+          debug("using TextPositionSelector");
           positionAnnotations = positionAnnotations.concat(annotation);
           break;
         case "RangeSelector":
-          // debug("using RangeSelector");
+          debug("using RangeSelector");
           rangeSelector({ tree, selector, annotation });
           break;
         default:
@@ -94,9 +100,9 @@ function matchAnnotations(tree, file, { annotations, url, canonical, notes }) {
   }
   processPositions(tree, positionAnnotations);
   processQuotations(tree, quoteAnnotations);
-  selectAll("svg", tree).forEach(svg => {
+  selectAll("svg", tree).forEach((svg) => {
     const svgHighlights = selectAll("tspan[data-annotation-id]", svg).map(
-      node => {
+      (node) => {
         const rect = h("rect");
         rect.properties[attributes["data-annotation-highlight-box"]] =
           node.properties[attributes["data-annotation-id"]];
@@ -122,10 +128,10 @@ function matchAnnotations(tree, file, { annotations, url, canonical, notes }) {
     svg.children = svg.children.concat(svgHighlights);
   });
   const sortedAnnotationsId = selectAll("[data-annotation-id]", tree).map(
-    node => node.properties.dataAnnotationId
+    (node) => node.properties.dataAnnotationId
   );
-  const sortedAnnotations = Array.from(new Set(sortedAnnotationsId)).map(id =>
-    annotations.find(annotation => annotation.id === id)
+  const sortedAnnotations = Array.from(new Set(sortedAnnotationsId)).map((id) =>
+    annotations.find((annotation) => annotation.id === id)
   );
   file.data.annotations = sortedAnnotations;
   function testSource(source) {
@@ -148,3 +154,5 @@ function matchAnnotations(tree, file, { annotations, url, canonical, notes }) {
 //       .concat(node.properties[attributes.class])
 //   }
 // }
+
+export default matchAnnotations;

@@ -1,7 +1,9 @@
-const visit = require("unist-util-visit-parents");
-const addPropsToNode = require("./add-props-to-node");
-const h = require("hastscript");
-const addParentProps = require("./add-parent-props");
+import { visitParents as visit } from "unist-util-visit-parents";
+import { addPropsToNode } from "./add-props-to-node.js";
+import { h } from "hastscript";
+import { addParentProps } from "./add-parent-props.js";
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
 const encode = require("universal-base64url").encode;
 
 function getId(id) {
@@ -29,7 +31,7 @@ For each selector:
 5. Add link to annotations collection id in head
 */
 
-module.exports = function processPositions(tree, positionAnnotations) {
+export function processPositions(tree, positionAnnotations) {
   // Sort annotations based on selector.start
   positionAnnotations.sort(
     (a, b) => a.target.selector.start - b.target.selector.start
@@ -40,20 +42,25 @@ module.exports = function processPositions(tree, positionAnnotations) {
   let count = 0;
   const replacementActions = [];
   visit(tree, "text", visitor);
-  replacementActions.forEach(fn => fn());
+  replacementActions.forEach((fn) => fn());
   function visitor(node, ancestors) {
     if (!annotation) return;
     visitNode({
       count,
       currentAnnotation: annotation,
       node,
-      ancestors
+      ancestors,
     });
     count = count + node.value.length;
   }
   function visitNode({ count, currentAnnotation, node, ancestors }) {
     const parent = ancestors[ancestors.length - 1];
-    const textElement = ancestors.find(node => node.tagName === "text");
+    const textElement = ancestors.find((node) => node.tagName === "text");
+    // One thing that would be useful here is the ability to select elements using the position/quotation selector
+    // The way this would work could be to have two new options: highlightingPurposes and highlightingSelectors.
+    // The selector only highlights if both are true. Export a config.js module that lists all known purposes and selectors.
+    // Also need an injectAnnotation option that injects the HTML commenting body adjacent to the selected node.
+    // How would it work
     const { end } = currentAnnotation.target.selector;
     const startInNode = startIsInNode(count, currentAnnotation, node);
     const endInNode = endIsInNode(count, currentAnnotation, node);
@@ -62,9 +69,9 @@ module.exports = function processPositions(tree, positionAnnotations) {
       endInNode,
       count,
       node,
-      svg: ancestors[ancestors.map(node => node.tagName).lastIndexOf("svg")],
+      svg: ancestors[ancestors.map((node) => node.tagName).lastIndexOf("svg")],
       currentAnnotation,
-      parent: textElement
+      parent: textElement,
     });
     if (replacement) {
       replacementActions.push(() => {
@@ -79,12 +86,12 @@ module.exports = function processPositions(tree, positionAnnotations) {
           count: end,
           currentAnnotation: annotation,
           node: suffix,
-          ancestors
+          ancestors,
         });
       }
     }
   }
-};
+}
 
 function wrapNode(text, annotation, svg, parent) {
   // If we decide to support linking purposes by rendering actual links then we need to change this and make sure we don't render nested links.
@@ -126,7 +133,7 @@ function processNode({
   node,
   currentAnnotation,
   svg,
-  parent
+  parent,
 }) {
   const { start, end } = currentAnnotation.target.selector;
   let replacement;

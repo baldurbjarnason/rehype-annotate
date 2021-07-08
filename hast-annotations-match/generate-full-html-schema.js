@@ -3,7 +3,7 @@ const gh = require("hast-util-sanitize/lib/github");
 const info = require("property-information");
 const svgElementAttributes = require("svg-element-attributes");
 const ariaAttributes = require("aria-attributes").map(
-  attr => info.find(info.html, attr).property
+  (attr) => info.find(info.html, attr).property
 );
 const htmlElementAttributes = require("html-element-attributes");
 const fs = require("fs");
@@ -222,7 +222,7 @@ schema.tagNames = [
   "mtext",
   "mtr",
   "munder",
-  "munderover"
+  "munderover",
 ];
 
 schema = merge(schema, {
@@ -242,25 +242,25 @@ schema = merge(schema, {
           "resource",
           "rev",
           "tabindex",
-          "typeof"
+          "typeof",
         ].concat(ariaAttributes)
       )
-    )
-  }
+    ),
+  },
 });
 
 schema.strip = ["script", "object", "applet", "foreignObject"];
 for (const element of Object.keys(svgElementAttributes)) {
   if (element !== "*" && schema.strip.indexOf(element) !== -1) {
     schema.attributes[element] = svgElementAttributes[element].map(
-      attr => info.find(info.html, attr).property
+      (attr) => info.find(info.html, attr).property
     );
   }
 }
 for (const element of Object.keys(htmlElementAttributes)) {
   if (element !== "*" && schema.strip.indexOf(element) !== -1) {
     schema.attributes[element] = htmlElementAttributes[element].map(
-      attr => info.find(info.html, attr).property
+      (attr) => info.find(info.html, attr).property
     );
   }
 }

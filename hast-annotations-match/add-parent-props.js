@@ -1,4 +1,6 @@
-const info = require("property-information");
+import { find, svg } from "property-information";
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
 const toString = require("hast-util-to-string");
 const pixelWidth = require("string-pixel-width");
 
@@ -24,25 +26,25 @@ const props = [
   "data-annotation-offset",
   "data-annotation-highlight",
   "data-annotation-transform",
-  "transform"
+  "transform",
 ];
 const attributes = {};
 for (const prop of props) {
-  attributes[prop] = info.find(info.svg, prop).property;
+  attributes[prop] = find(svg, prop).property;
 }
 
-module.exports = function addPropsToNode(svg, node, parent) {
+export function addParentProps(svg, node, parent) {
   if (!svg) return;
   const fontSize = Number.parseFloat(
     parent.properties[attributes["font-size"]] || 16
   );
   const parentPixelWidth = pixelWidth(toString(parent), {
     size: fontSize,
-    font: "helvetica"
+    font: "helvetica",
   });
   const nodePixelWidth = pixelWidth(toString(node), {
     size: fontSize,
-    font: "helvetica"
+    font: "helvetica",
   });
   // const offset = parentLength - nodeLength;
   const width = Number.parseFloat(
@@ -62,4 +64,4 @@ module.exports = function addPropsToNode(svg, node, parent) {
   node.properties[attributes["data-annotation-height"]] = String(height);
   node.properties[attributes["data-annotation-transform"]] =
     node.properties[attributes.transform];
-};
+}

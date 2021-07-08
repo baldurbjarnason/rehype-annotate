@@ -1,4 +1,4 @@
-const info = require("property-information");
+import { find, html } from "property-information";
 
 /* 
 ## Props
@@ -15,17 +15,18 @@ const props = [
   "class",
   "data-annotation-purpose",
   "data-annotation-type",
-  "data-target"
+  "data-target",
 ];
 const attributes = {};
 for (const prop of props) {
-  attributes[prop] = info.find(info.html, prop).property;
+  attributes[prop] = find(html, prop).property;
 }
 
-module.exports = function addPropsToNode(node, annotation) {
+export function addPropsToNode(node, annotation) {
+  // console.log("does this get called?: ", node, annotation);
   const { target } = annotation;
   const { body = [] } = annotation;
-  let purposes = body.map(item => item.purpose);
+  let purposes = body.map((item) => item.purpose);
   purposes = [].concat(...purposes);
   node.properties[attributes["data-annotation-id"]] = annotation.id;
   node.properties[attributes["data-annotation-motivation"]] = []
@@ -35,9 +36,9 @@ module.exports = function addPropsToNode(node, annotation) {
     const classes = node.properties[attributes.class] || [];
     node.properties[attributes.class] = classes
       .concat(target.styleClass)
-      .filter(item => item);
+      .filter((item) => item);
   }
   if (purposes.length !== 0) {
     node.properties[attributes["data-annotation-purpose"]] = purposes;
   }
-};
+}

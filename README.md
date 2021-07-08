@@ -1,5 +1,11 @@
 # `rehype-annotate`
 
+## Version 1.0 and ESM support
+
+With version 1.0+ this module is [ESM only](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c): Node 12+ is needed to use it and it must be imported instead of required.
+
+## Introduction
+
 This [`rehype`](https://github.com/rehypejs/rehype) plugin matches [W3C-style annotations](https://www.w3.org/TR/annotation-model/) to their targets in the parsed HTML file. It wraps text range selections in `mark` elements and adds attributes and hooks to matched locations that can be used in other processors or browser scripts to implement further behaviours.
 
 Note: this modifies the original tree and in some cases can add class attributes. Make sure to sanitise the tree afterwards.
@@ -34,7 +40,7 @@ const report = require("vfile-reporter");
 const glob = require("glob");
 const path = require("path");
 
-async function process (file, options) {
+async function process(file, options) {
   return unified()
     .use(parse)
     .use(annotate, options)
@@ -44,19 +50,19 @@ async function process (file, options) {
 
 const options = {
   // Should be an array of W3C Web Annotations
-  annotations: require('./path/to/annotations/json'),
+  annotations: require("./path/to/annotations/json"),
   // the base url for the original html
   url: "https://syndicated.example.com/annotated.html",
   // the canonical url for the html
-  canonical: "https://example.org/annotated.html"
-}
+  canonical: "https://example.org/annotated.html",
+};
 
-process('path/to/example/htmlfile.html', options)
-  .then(file => {
+process("path/to/example/htmlfile.html", options)
+  .then((file) => {
     console.log(report(file));
-    console.log(String(file))
+    console.log(String(file));
   })
-  .catch(err => console.error(err))
+  .catch((err) => console.error(err));
 ```
 
 The above code will print whatever issues are found out to the console, followed by the processed HTML.
@@ -70,10 +76,11 @@ The `file.data.annotations` property will contain the annotations that have been
 Configure `processor` to modify the [**hast**][hast] syntax tree to match annotations to their target locations in the HTML.
 
 The following attributes are added when an element node is matched by a selector:
-* `data-annotation-id`: the id of the matched annotation
-* `data-annotation-motivation`: space-separated list of the motivations from the annotation [`motivation`](https://www.w3.org/TR/annotation-model/#motivation-and-purpose) property.
-* `data-annotation-purpose` space-separated list of the purposes from the annotation _body's_ [`purpose`](https://www.w3.org/TR/annotation-model/#motivation-and-purpose) property.
-* `class` the value of the annotation's [`styleClass`](https://www.w3.org/TR/annotation-model/#styles) property is added when present.
+
+- `data-annotation-id`: the id of the matched annotation
+- `data-annotation-motivation`: space-separated list of the motivations from the annotation [`motivation`](https://www.w3.org/TR/annotation-model/#motivation-and-purpose) property.
+- `data-annotation-purpose` space-separated list of the purposes from the annotation _body's_ [`purpose`](https://www.w3.org/TR/annotation-model/#motivation-and-purpose) property.
+- `class` the value of the annotation's [`styleClass`](https://www.w3.org/TR/annotation-model/#styles) property is added when present.
 
 #### Example (single node match):
 
@@ -129,12 +136,15 @@ And `rehype-annotate` is run with the following annotation:
 Then the result should be (provided the `url` or `canonical` options match the `source`):
 
 ```html
-<h2 
-  id="test-id" 
-  data-annotation-id="http://example.com/annotations1" 
-  data-annotation-motivation="bookmarking" 
-  class="Bookmarked" 
-  data-annotation-purpose="tagging describing">Stirs ending exceeding fond muster fall Bagshot.</h2>
+<h2
+  id="test-id"
+  data-annotation-id="http://example.com/annotations1"
+  data-annotation-motivation="bookmarking"
+  class="Bookmarked"
+  data-annotation-purpose="tagging describing"
+>
+  Stirs ending exceeding fond muster fall Bagshot.
+</h2>
 ```
 
 #### Example (text range match):
@@ -142,7 +152,11 @@ Then the result should be (provided the `url` or `canonical` options match the `
 If the source HTML is as follows:
 
 ```html
-<p>Resilient Garulf key quest abandon knives lifted niceties tonight disappeared strongest plates. Farthing ginger large. Nobody tosses a Dwarf. Makes Shadowfax nearly lesser south deceive hates 22nd missing others!</p>
+<p>
+  Resilient Garulf key quest abandon knives lifted niceties tonight disappeared
+  strongest plates. Farthing ginger large. Nobody tosses a Dwarf. Makes
+  Shadowfax nearly lesser south deceive hates 22nd missing others!
+</p>
 ```
 
 And `rehype-annotate` is run with the following annotation:
@@ -177,7 +191,16 @@ Then the result should be (provided the `url` or `canonical` options match the `
 
 ```html
 <p>
-  <mark data-annotation-id="http://example.com/annotations1" data-annotation-motivation="highlighting" class="Bookmarked" data-annotation-purpose="commenting">Resilient Garulf key quest abandon knives</mark> lifted niceties tonight disappeared strongest plates. Farthing ginger large. Nobody tosses a Dwarf. Makes Shadowfax nearly lesser south deceive hates 22nd missing others!
+  <mark
+    data-annotation-id="http://example.com/annotations1"
+    data-annotation-motivation="highlighting"
+    class="Bookmarked"
+    data-annotation-purpose="commenting"
+    >Resilient Garulf key quest abandon knives</mark
+  >
+  lifted niceties tonight disappeared strongest plates. Farthing ginger large.
+  Nobody tosses a Dwarf. Makes Shadowfax nearly lesser south deceive hates 22nd
+  missing others!
 </p>
 ```
 
@@ -193,12 +216,12 @@ The annotation is only matched to the html source if the `annotation.target.sour
 
 ## Selector Support
 
-* `CssSelector`: limited to the selectors supported by [`hast-util-select`](https://github.com/syntax-tree/hast-util-select#support)
-* `XPathSelector`: because `rehype`/`hast` doesn't come with built-in `xpath` support, these selectors only work when they are very simple. E.g. `/html/body/p[1]`
-* `FragmentSelector`: supports only HTML fragment ids.
-* `RangeSelector`: supported when both `startSelector` and `endSelector` resolve to element nodes.
-* `TextQuoteSelector`: implementation is loosely based on the excellent [`dom-anchor-text-quote`](https://github.com/tilgovi/dom-anchor-text-quote) by Randall Leeds.
-* `TextPositionSelector`
+- `CssSelector`: limited to the selectors supported by [`hast-util-select`](https://github.com/syntax-tree/hast-util-select#support)
+- `XPathSelector`: because `rehype`/`hast` doesn't come with built-in `xpath` support, these selectors only work when they are very simple. E.g. `/html/body/p[1]`
+- `FragmentSelector`: supports only HTML fragment ids.
+- `RangeSelector`: supported when both `startSelector` and `endSelector` resolve to element nodes.
+- `TextQuoteSelector`: implementation is loosely based on the excellent [`dom-anchor-text-quote`](https://github.com/tilgovi/dom-anchor-text-quote) by Randall Leeds.
+- `TextPositionSelector`
 
 For performance reasons text quote and text position selectors that overlap each other in the document are not supported.
 
