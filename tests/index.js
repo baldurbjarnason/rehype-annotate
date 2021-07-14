@@ -2,16 +2,16 @@ import { toVFile } from "to-vfile";
 import { reporter } from "vfile-reporter";
 import { attacher } from "../index.js";
 import * as path from "path";
+import glob from "glob";
+import stringify from "rehype-stringify";
+import parse from "rehype-parse";
+import unified from "unified";
+import tap from "tap";
 import { createRequire } from "module";
 import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename).replace(process.cwd() + "/", "");
 const require = createRequire(import.meta.url);
-const tap = require("tap");
-const unified = require("unified");
-const parse = require("rehype-parse");
-const stringify = require("rehype-stringify");
-const glob = require("glob");
 // const fragment = { fragment: true };
 
 async function processAnnotations(filepath, options) {

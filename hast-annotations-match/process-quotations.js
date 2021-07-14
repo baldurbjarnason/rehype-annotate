@@ -1,14 +1,12 @@
 import { processPositions } from "./process-positions.js";
-import { createRequire } from "module";
-const require = createRequire(import.meta.url);
+import DiffMatchPatch from "diff-match-patch";
+import toString from "hast-util-to-string";
 
 // Based on https://github.com/tilgovi/dom-anchor-text-quote/blob/master/src/index.js MIT Licensed
 
-const DiffMatchPatch = require("diff-match-patch");
 // The DiffMatchPatch bitap has a hard 32-character pattern length limit.
 const SLICE_LENGTH = 32;
 const SLICE_RE = new RegExp("(.|[\r\n]){1," + String(SLICE_LENGTH) + "}", "g");
-const toString = require("hast-util-to-string");
 
 export function processQuotations(tree, quoteAnnotations) {
   let positionAnnotations = quoteAnnotations.map(processQuote);

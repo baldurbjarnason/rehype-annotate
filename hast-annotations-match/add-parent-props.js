@@ -1,8 +1,6 @@
 import { find, svg } from "property-information";
-import { createRequire } from "module";
-const require = createRequire(import.meta.url);
-const toString = require("hast-util-to-string");
-const pixelWidth = require("string-pixel-width");
+import pixelWidth from "string-pixel-width";
+import toString from "hast-util-to-string";
 
 /* 
 ## Props

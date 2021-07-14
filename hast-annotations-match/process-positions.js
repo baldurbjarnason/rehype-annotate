@@ -2,9 +2,7 @@ import { visitParents as visit } from "unist-util-visit-parents";
 import { addPropsToNode } from "./add-props-to-node.js";
 import { h } from "hastscript";
 import { addParentProps } from "./add-parent-props.js";
-import { createRequire } from "module";
-const require = createRequire(import.meta.url);
-const encode = require("universal-base64url").encode;
+import { encode } from "universal-base64url";
 
 function getId(id) {
   return `id-${encode(id)}`;
